@@ -7,7 +7,7 @@ permalink: /modeling/kalmanfilter
 
 # Kalman Filter Project
 
-Complete description with all details: [View PDF]( /assets/kalmanfilter/SOC_KalmanFilterProject.pdf ){:target="_blank"}
+Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_KalmanFilterProject.pdf ){:target="_blank"}
 
 <div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
 
