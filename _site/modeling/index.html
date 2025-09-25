@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Modeling | tylerbarrows</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Modeling" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Personal website and projects" />
+<meta property="og:description" content="Personal website and projects" />
+<link rel="canonical" href="http://localhost:4000/modeling/" />
+<meta property="og:url" content="http://localhost:4000/modeling/" />
+<meta property="og:site_name" content="tylerbarrows" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Modeling" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Personal website and projects","headline":"Modeling","url":"http://localhost:4000/modeling/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="tylerbarrows" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">tylerbarrows</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/">Home</a><a class="page-link" href="/modeling/">Modeling</a><a class="page-link" href="/miscellaneous/">Miscellaneous</a><a class="page-link" href="/contact/">Contact</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="modeling">Modeling</h1>
+
+<div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    This page looks at some of the modeling projects I have done. These projects were motivated by wanting to learn new mathematical techniques, interest in capturing physical phenomena, and learning how to implement numerical techniques. 
+    </p>
+    <p>
+    The pojects found below are:
+    </p>
+     <ul>
+        <li><a href="#CFD">CFD project</a>: A description of the project and the end objective</li>
+        <li><a href="#kalmanFilter">Kalman filter</a>: A description of the project and the end objective</li>
+     </ul>
+    <p>
+    Click on a specific project to learn more. Each project has a brief description on what you can find in each one. 
+    </p>
+  </div>
+</div>
+
+<hr />
+
+<!-- # [CFD Project](cfd.html) -->
+
+<div id="CFD" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <h1><a href="cfd.html">CFD Project</a></h1>
+    <p>
+      CFD has always interested me with its combination of physical modeling and numerical integration. With this project, I wanted to see if I could build my own CFD model to test my understanding. Currently, the model is only a 1D model where the user can specify inlet and outlet conditions and enter simple geometries (converging, diverging, converging-diverging). The area is symmetrical along the axial direction. Currently, the model uses ideal gas equations, so it is only valid for fluids that can be modeled as ideal gas.
+    </p>
+    <p>
+      The goal is to eventually expand to 2D, where I can look at more complicated geometries and find the full flow field for the simple geometries used in the 1D model. The current model is written in Python, but C++ will be evaluated for writing the 2D model.
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="flex: 0 0 50%; min-width: 200px;">
+    <img src="/assets/cfd/IntroGeometryAndMach.png" alt="CFD Results" style="width:100%; border-radius:5px;" />
+    <figcaption style="text-align:center;"><em>Converging-diverging geometry (top) and Mach number results (bottom).</em></figcaption>
+  </figure>
+
+</div>
+
+<hr />
+
+<!-- # [Kalman Filter Project](kalmanfilter.html) -->
+
+<div id="kalmanFilter" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <h1><a href="kalmanfilter.html">Kalman Filter</a></h1>
+    <p>
+      This project was motivated by a conversation with a work colleague where we were discussing how a measurement used in engine control was noisy and the control would end up using the model value instead of the measurement. I came across the Kalman filter on a previous project and this seemed like another application where it could be implemented. 
+    </p>
+    <p>
+      Here, I revisit the Kalman filter and build it out to test my understanding of the filter, its derivation, and any practical challenges in practically implementing the filter.
+    </p>
+    <p>
+      I learned a few things about how to better organize this project so hopefully this is a little more clear than the CFD project. Overall, it was cool to experiment with the Kalman filter. It’s clearly a very ingenious idea but it can be challenging to tune (which I get into but don’t explore too too much)
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="flex: 0 0 50%; min-width: 200px; align-items: center">
+    <img src="/assets/kalmanFilter/KalmanFilterBlockDiagram.png" alt="Kalman Filter Block Diagram" style="width:100%; border-radius:5px;" />
+    <figcaption style="text-align:center;"><em>Kalman Filter Block Diagram.</em></figcaption>
+    <img src="/assets/kalmanFilter/FUDS_0degC_80SOC.png" alt="CFD Results" style="width:100%; border-radius:5px;" />
+    <figcaption style="text-align:center;"><em>Kalman Filter SOC esimation vs Coulomb Counting compared to actual SOC.</em></figcaption>
+  </figure>
+
+</div>
+
+      </div>
+    </main><!-- Empty footer to override Minima default -->
+<!-- added this 20250903 -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['\\(','\\)']],
+          displayMath: [['$$','$$']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async 
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+  </body>
+
+</html>
