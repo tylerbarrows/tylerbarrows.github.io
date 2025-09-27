@@ -172,7 +172,7 @@ nav_order: 3
     </p>
     $$ cos(\theta) = \frac{-\alpha \pm \sqrt{\alpha^2 - 4}}{2} $$
     <p>
-    We have found a solution for the angle that only depends on gravity, rope mass density, and drag. All of these are assumed constant and gives us a constant angle so we conclude we have the straight line. This is also what the youtube video above shows from Veritasium. 
+    We have found a solution for the angle that only depends on gravity, rope mass density, and drag. All of these are assumed constant and gives us a constant angle so we conclude we have the straight line which is answer (B). This is also what the youtube video above shows from Veritasium. 
     </p>
     <p>
     There is more we can do based on our findings. Below is a table for values of \(\alpha\) and \(\frac{-\alpha \pm \sqrt{\alpha^2 - 4}}{2}\). From \(\alpha\), we know that \(\alpha=0\) (or the limit as \(\alpha\) approaches 0) would correspond to a very, very light rope or a rope situation with very high drag. We know. that \(\alpha=\infty\) (or the limit as \(\alpha\) approaches \(\infty\)) would correspond to a scenario with a very low drag coefficient or a very, very heavy rope. Lets look at the results and what physics the results suggest
