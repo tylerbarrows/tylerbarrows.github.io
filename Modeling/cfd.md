@@ -1504,7 +1504,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     <h2>Future Work</h2>
     </p>
     <p>
-   There’s a lot to be added to expand our model capabilities. These include (in no particular order)::
+   There’s a lot to be added to expand our model capabilities. These include (in no particular order):
     </p>
     <ul>
     <li>Expanding to 2D</li>
