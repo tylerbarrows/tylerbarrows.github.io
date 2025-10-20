@@ -18,6 +18,7 @@ nav_order: 3
   <ul>
   <li><a href="#ElectricField">Electric Field from Moving Charge</a></li>
   <li><a href="#helicopterRope">Rope hanging from helicopter at constant speed</a></li>
+  <li><a href="#TrainSpringMassDamper">Two trains connected by coupling modeled as a spring and damper</a></li>
   </ul>
   </p>
   </div>
@@ -257,12 +258,466 @@ nav_order: 3
     $$ T_s = -[K_D cos(\theta) sin(\theta) + \lambda g sin(\theta)] (s-L) $$
     $$ T_s = [K_D cos(\theta) sin(\theta) + \lambda g sin(\theta)] (L-s) $$
     <p>
-    There's a couple points to make here. First, tension is acting in the direction we assumed on our force balance (we know that \(0 \le \theta \le 90 \; deg.\) so that all parameters in the [] are positive). Any segment of rope that has it's end as the end of the rope will have gravity and air friction pulling in the \(s\) direction with tension pulling in the \(-s\) direction. We basically have tension in the rope due to gravity and air friction. We also note that tension is proportional to distance along the length of rope. 
+    There's a couple points to make here. First, tension is acting in the direction we assumed on our force balance (we know that \(0 \le \theta \le 90 \; deg.\) so that all parameters in the [ ] are positive). Any segment of rope that has it's end as the end of the rope will have gravity and air friction pulling in the \(s\) direction with tension pulling in the \(-s\) direction. We basically have tension in the rope due to gravity and air friction. We also note that tension is proportional to distance along the length of rope. 
     </p>
     <p>
     It's cool that such a simple problem can be very interesting.
     </p>
 
+  </div>
+
+</div>
+
+---
+
+<div id='TrainSpringMassDamper' style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    <h2>Train Coupling as Spring, Mass, Dampener</h2>
+    </p>
+    <p>
+    In an interview a while back I was asked how analyze the coupling between trains. I forget what the analysis was supposed to be getting at it but the question was more about how to model the situation so using a free body diagram to show the forces and then model the coupling as a spring and damper so you end up with two masses and a spring and damper between them in the simplest case. The interviewer described how they used Simscape to model this and my first impression was that might be a little overkill so I decided to look at how you could do a simple model (that might give some insight) without using Simscape. 
+    </p>
+    <p>
+    I think the actual application that would require this type of analysis might be where you are connecting train cars and looking at what speed the trains should be at. I assume one set is stationary and the other car is moving towards the stationary set to connect. So we have a stationary car and then a moving car (something has to cause the moving car to move but I ignore this). The other application is how to accelerate a set of trains so we can look at that by applying a force to one of the trains. The scenario for two cars is shown below.
+    </p>
+    <p>
+    In the end I could see how Simscape could be useful depending on the situation as the model can get a little complicated if you start looking at many cars. I ended up comparing 5 methods for modeling the two car scenario, looked at the case where the coupling is constrained (how much can it extend and compress), looked at the conservation of energy, and then compared the max. force on the coupling and total energy dissipation through the damper as a function of initial speed. This problem became fairly involved and I could have moved it to the <a href="/modeling/index.html">Modeling Section</a> but since I never had a good objective for this, I keep it here. 
+    </p>
+    
+  </div>
+
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Figure -->
+  <figure style="flex: 0 0 80%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/TrainSpringMassDamperSchematic.png" alt="Train Spring Mass Damper Schematic" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Train Spring Mass Damper Schematic.</em></figcaption>
+  </figure>
+
+</div>
+
+<div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    In the above, we have \(m_1\) and \(m_2\) as our train masses, and for each train we have an external force \(F\) and a constant friction coefficient \(f\). Connecting both trains is our spring, \(k_{12}\), and our damper, \(c_{12}\). Note the positive \(x_1\) and \(x_2\) directions are both in the right direction in the schematic. 
+    </p>
+    <p>
+    The force balance for train car 1 is shown below. 
+    </p>
+
+  </div>
+
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Figure -->
+  <figure style="flex: 0 0 60%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Train1ForceBalance.png" alt="Train 1 Force Balance" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Train 1 Force Balance.</em></figcaption>
+  </figure>
+
+</div>
+
+<div style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    The force balance for train 2 is very similar except the force from the spring and damper are acting in the other direction. We then have:
+    </p>
+    $$ m_1 \frac{d \dot{x}_1}{dt} = -k_{12}(x_1-x_2) - c_{12}(\dot{x}_1-\dot{x}_2) - f_1 \dot{x}_1 + F_1(t) $$
+    $$ m_2 \frac{d \dot{x}_2}{dt} = k_{12}(x_1-x_2) + c_{12}(\dot{x}_1-\dot{x}_2) - f_2 \dot{x}_2 + F_2(t) $$
+    <p>
+    We can make the friction force proportional to the normal force using \(f=\mu m g\). We multiply by the velocity so that we have no friction force when the car isn't moving. 
+    </p>
+    <p>
+    We see that we can put this in state space form:
+    </p>
+    $$ \dot{x} = Ax + Bu $$
+    <p>
+    For us we have (I don't use bars to denote vectors but it should be implied in this problem that \(x\) and \(u\) are generally vectors and \(A\) and \(B\) are generally matrices):
+    </p>
+    $$ x = \begin{bmatrix} x_1 \\ x_2 \\ \dot{x}_1 \\ \dot{x}_2 \end{bmatrix} \; , \; A =  \begin{bmatrix} 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ -\frac{k_{12}}{m_1} & \frac{k_{12}}{m_1} & -\frac{f_1+c_{12}}{m_1} & \frac{c_{12}}{m_1}  \\ \frac{k_{12}}{m_2} & -\frac{k_{12}}{m_2} & \frac{c_{12}}{m_2} & -\frac{f_2+c_{12}}{m_2} \end{bmatrix} \; , \; B = \begin{bmatrix} 0 & 0 \\ 0 & 0 \\ \frac{1}{m_1} & 0 \\ 0 & \frac{1}{m_2} \end{bmatrix} \; , \; u =  \begin{bmatrix} F_1(t) \\ F_2(t) \end{bmatrix}$$
+    <p>
+    We can solve this in many different ways that we explore below. We can also include limits on how \(x_1\) and \(x_2\) can change. We are modeling the coupling as a spring and damper so we can have \( l_{min} \le (x_2-x_1) \le l_{max} \) too. Using the state space model, we can solve this explicitly and also implicitly using dual time stepping. To explore other ways, we can find the discrete state space form. We won't look to solve this analytically since we will need to diagonalize the state matrix and it will get a little messy. To get the discrete state space form, we do the following:
+    </p>
+    $$ \dot{x} = Ax + Bu $$
+    $$ e^{-At} \dot{x} = e^{-At} Ax + e^{-At} Bu $$
+    $$ d(e^{-At}x) = e^{-At} Bu $$
+    $$ e^{-At}x - x_0 = \int_0^t e^{-A\tau} Bu d\tau $$
+    $$ x = e^{At} x_0 + \int_0^t e^{A(t-\tau)} Bu d\tau $$
+    <p>
+    We can then define \(x[k]=x(kT)\) where \(T\) is our time increment. We also have \(x[k+1]=x((k+1)T)\). We then can say:
+    </p>
+    $$ x[k] = e^{AkT} x_0 + \int_0^{kT} e^{A(kT-\tau)} Bu d\tau $$
+    <p>and</p>
+    $$ x[k+1] = e^{A(k+1)T} x_0 + \int_0^{(k+1)T} e^{A((k+1)T-\tau)} Bu d\tau $$
+    $$ = e^{AT} e^{AkT} x_0 + \int_0^{kT} e^{A((k+1)T-\tau)} Bu d\tau + \int_{kT}^{(k+1)T} e^{A((k+1)T-\tau)} Bu d\tau $$
+    $$ = e^{AT} e^{AkT} x_0 + e^{AT}\int_0^{kT} e^{A(kT-\tau)} Bu d\tau + \int_{kT}^{(k+1)T} e^{A((k+1)T-\tau)} Bu d\tau $$
+    $$ = e^{AT} ( e^{AkT} x_0 + e^{AT}\int_0^{kT} e^{A(kT-\tau)} Bu d\tau ) + \int_{kT}^{(k+1)T} e^{A((k+1)T-\tau)} Bu d\tau $$
+    $$ = e^{AT} x[k] + \int_{kT}^{(k+1)T} e^{A((k+1)T-\tau)} Bu d\tau $$
+    <p>
+    Focusing on the last term on the RHS, we can make substitution \(v=(k+1)T-\tau\) and obtain:
+    </p>
+    $$ \int_{kT}^{(k+1)T} e^{A((k+1)T-\tau)} Bu d\tau = - \int_{T}^{0} e^{Av} Bu dv$$
+    $$ = \int_{0}^{T} e^{Av} Bu dv $$ 
+    <p>
+    If we then assume that \(B\) is constant and \(u\) is constant over our \(T\) interval, we have:
+    </p>
+    $$ \int_{0}^{T} e^{Av} Bu dv = ( \int_{0}^{T} e^{Av} dv ) \, Bu[k]$$ 
+    $$ = A^{-1} (e^{AT} - I) Bu[k] $$
+    <p>
+    So we then have:
+    </p>
+    $$ x[k+1] = e^{AT} x[k] + A^{-1} (e^{AT} - I) Bu[k] $$
+    <p>
+    We then have 5 methods to explore:
+    <ul>
+      <li>Explicit Method</li>
+      <li>Dual Time Stepping</li>
+      <li>Discrete with One Riemann Sum</li>
+      <li>Discrete with SVD Inverse</li>
+      <li>Discrete using Pade Approximation</li>
+    </ul>
+    </p>
+    <p>
+    <h3>Explicit Method</h3>
+    </p>
+    <p>
+    The explicit method is the easiest to implement. For this we just use:
+    </p>
+    $$ \dot{x}_k = \frac{1}{dt} (x_{k+1}-x_k) $$
+    <p>
+    and we solve this explicitly at each time step using the values at the past time step. In general, this method can be less stable and lead to errors especially if the time step is large
+    </p>
+    <h3>Dual Time Stepping</h3>
+    <p>
+    This method is very cool and I would like to eventually implement it in my <a href="/modeling/cfd.html">CFD Project</a>. In this method, we use an additional psuedo-time step to solve the differential equation. This can be illustrated as:
+    </p>
+    $$ \dot{x} = Ax + Bu $$
+    <p>
+    We then discretize and say:
+    </p>
+    $$ \frac{1}{\Delta t}(x_{k+1}-x_k) = Ax_{k+1} + Bu_{k+1} $$
+    <p>
+    We then have an implicit equation, and we can bring both terms to the same side so we have:
+    </p>
+    $$ \frac{1}{\Delta t}(x_{k+1}-x_k) - ( Ax_{k+1} + Bu_{k+1} ) = 0 $$
+    <p>
+    Introducing dual time stepping, we obtain:
+    </p>
+    $$ \frac{dx_{k+1}}{dt'} - \frac{1}{\Delta t}(x_{k+1}-x_k) - ( Ax_{k+1}^{n} + Bu_{k+1} ) = 0 $$
+    <p>
+    As \(t'\) approaches \(\infty \), we converge on the solution so we can use explict pseudo-time stepping:
+    </p>
+    $$ \frac{1}{\Delta t'} (x_{k+1}^{n+1} - x_{k+1}^{n}) - \frac{1}{\Delta t}(x_{k+1}^{n}-x_k) - ( Ax_{k+1}^{n} + Bu_{k+1} ) = 0 $$
+    <p>
+    We also introduce some limitations on the psuedo-time step, \(\Delta t'\), so that we don't have oscillations. So dual time stepping is an implict method and we can tolerate larger time steps comapred to the explicit method and should in general have a more stable and robust solver. 
+    </p>
+    <p>
+    <h3>Discrete with One Riemann Sum</h3>
+    </p>
+    <p>
+    In this method, we start with:
+    </p>
+    $$ x[k+1] = e^{AT} x_0 + (\int_{0}^{T} e^{Av} dv) \, Bu[k]$$ 
+    <p>
+    If we assume that our time step, \(T\), is small enough, we can appoximate \(\int_{0}^{T} e^{Av} dv\) as \(T \), \(e^{AT}T\), or \(e^{\alpha T}T\) where \(\alpha \le 1\). We expect this method to be similar to the explicit method. This method will be sensitive to the time step and can be, in general, not stable. 
+    </p>
+    <h3>Discrete with SVD Inverse</h3>
+    <p>
+    In this method, we use:
+    </p>
+    $$ x[k+1] = e^{AT} x[k] + A^{-1} (e^{AT} - I) Bu[k] $$
+    <p>
+    However, due to the symmetry in our model, we can see how \(A\) can be singular. To alleviate this, we can use the SVD of A and find the inverse using the SVD. The SVD decomposition of a matrix is defined as:
+    </p>
+    $$ A = U \Sigma V^H $$
+    <p>
+    The SVD can be very useful. \(U\) and \(V\) are both unitary matrices (meaning \(UU^H=I\)) and \(\Sigma\) is a matrix with the singular values of \(A\) along the diagonal in descending order. The SVD has the advantage of working for non-square matrices and you can find the pseudo-inverse for singular matrices. One of these days, I will look into more detail about the SVD, particularly in how to find the singular values. There's a lot we could say here, but we find the SVD using Numpy in python then we can use the transpose (or conjugate transpose in general) of \(U\) and \(V\) and take the recripocal of the singular values in \(\Sigma\). 
+    </p>
+    $$ A^+ = V \Sigma^+ U^H $$
+    <p>
+    Here, \(A^+\) is the psuedo-inverse and \(\Sigma^+\) has the recripocal of the singular values of \(A\) along its diagonal. 
+    </p>
+    <h3>Discrete with Pade Approximation</h3>
+    <p>
+    In this method, we again use:
+    </p>
+    $$ x[k+1] = e^{AT} x[k] + A^{-1} (e^{AT} - I) Bu[k] $$
+    <p>
+    This time, we can expand \(e^{AT} = \sum_{k=0}^{\infty} \frac{(AT)^{k}}{k!}\). When we plug this in, we get:
+    </p>
+    $$ x[k+1] = e^{AT} x[k] + A^{-1} (\sum_{k=0}^{\infty} \frac{(AT)^{k}}{k!} - I) Bu[k] $$
+    $$ = A^{-1} (I + \sum_{k=1}^{\infty} \frac{(AT)^{k}}{k!} - I) Bu[k] $$
+    $$ =  \sum_{k=1}^{\infty} \frac{A^{k-1}T^{k}}{k!} Bu[k] = \sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} $$
+    <p>
+    We then can use a Pade approximation for \( \sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} \). This will be good practice for understanding the Pade approximation. We will find a [2/2] Pade approximation. What we will have is:
+    </p>
+    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 = \frac{a_0 + a_1 A + a_2 A^2}{1 + b_1 A + b_2 A^2} $$
+    <p>
+    The first thing we want to do is expand the denominator the Pade approximation to get a geometric series:
+    </p>
+    $$ \frac{1}{1 + b_1 A + b_2 A^2} = c_0 + c_1 A + c_2 A^2 + c_3 A^3 + ... $$
+    $$ 1 = (1 + b_1 A + b_2 A^2)(c_0 + c_1 A + c_2 A^2 + c_3 A^3 + ...) $$
+    $$ 1 = c_0 + (c_1 + b_1c_0)A + (c_2 + b_1c_1 + b_2c_0)A^2 + (c_3 b_1c_2 b_2c_1)A^3 + (c_4 + b_1c_3 + b_2c_2)A^4 + ... $$
+    <p>
+    We then have:
+    </p>
+    $$ c_0 = 1 $$
+    $$ c_1 = -b_1 $$
+    $$ c_2 = -b_s1c_1 - b_2c_0 = b_1^2 - b_2 $$
+    $$ c_3 = -b_1c_2 - b_2c_1 = -b_1(b_1^2 - b_2) - b_2(-b_1) = -b_1^3 + 2b_1b_2 $$ 
+    $$ c_4 = -b_1c_3 - b_2c_2 = -b_1(-b_1^3 + 2b_1b_2) - b_2(b_1^2 - b_2) $$
+    $$ c_4 = b_1^4 - 2b_1^2b_2 - b_1^2b_2 + b_2^2 = b_1^4 - 3b_1^2b_2 + b_2^2 $$
+    <p>
+    Going back to our pade approximation, we have:
+    </p>
+    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 = \frac{a_0 + a_1 A + a_2 A^2}{1 + b_1 A + b_2 A^2} $$
+    $$ = (a_0 + a_1 A + a_2 A^2) (c_0 + c_1 A + c_2 A^2 + c_3 A^3 + ...) $$ 
+    $$ = a_0c_0 + (a_0c_1 + a_1c_0) A + (a_0c_2 + a_1c_1 + a_2c_0) A^2 + (a_0c_3 + a_1c_2 + a_2c_1) A^3 $$
+    $$ + (a_0c_4 + a_1c_3 + a_2c_2) A ^ 4 + ... $$
+    <p>
+    I knew this already, but we can check here that we have 5 unknowns \(a_0,a_1,a_2,b_1,b_2\) and we have 5 equations. We can substitute in for our \(c_i\) values:
+    </p>
+    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 = a_0 + (-a_0b_1 + a_1) A + [a_0(b_1^2-b_2) - a_1b_1 + a_2] A^2$$
+    $$ + [a_0(-b_1^3 + 2b_1b_2) + a_1(b_1^2 - b_2) - a_2b_1] A^3  $$
+    $$ + [a_0(b_1^4 - 3b_1^2b_2 + b_2^2) + a_1(-b_1^3 + 2b_1b_2) + a_2(b_1^2 - b_2)] A ^ 4 + ... $$
+    <p>
+    We now say:
+    </p>
+    $$ a_0 = m_0 $$
+    $$ -a_0b_1 + a_1 = m_1 $$
+    $$ a_0(b_1^2-b_2) - a_1b_1 + a_2 = m_2 $$
+    $$ a_0(-b_1^3+2b_1b_2) + a_1(b_1^2-b_2) - a_2b_1 = m_3 $$
+    $$ a_0(b_1^4 - 3b_1^2b_2 + b_2^2) + a_1(-b_1^3 + 2b_1b_2) + a_2(b_1^2 - b_2) = m_4 $$
+    <p>
+    This can be solved in a couple different ways. We can say that we have \(\bar{v}=(a_0,a_1,a_2,b_1,b_2)^T\) and that we have \(F(\bar{v})=\bar{g}=(m_0,m_1,m_2,m_3,m_4)^T\). We then can say:
+    </p>
+    $$ F(\bar{v}) ~= F(\bar{v}_{n}) + \frac{dF}{d\bar{v}}(\bar{v}_{n+1}-\bar{v}_{n}) = \bar{g} $$
+    <p>
+    We solve this for \(\bar{v}_{n+1}\):
+    </p>
+    $$ \bar{v}_{n+1} =\bar{v}_{n} + (\frac{dF}{d\bar{v}})^{-1} ( \bar{g} - F(\bar{v}_{n}) ) $$
+    <p>
+    For \(\frac{dF}{d\bar{v}}\), we have:
+    </p>
+    $$ \frac{dF}{d\bar{v}} = \begin{bmatrix}
+    1 & 0 & 0 & 0 & 0 \\
+    -b_1 & 1 & 0 & -a_0 & 0 \\
+    b_1^2-b_2 & -b_1 & 1 & 2a_0b_1 - a_1 & -a_0 \\
+    -b_1^3+2b_1b_2 & b_1^2-b_2 & -b_1 & \begin{aligned} -3a_0b_1^2 + 2a_0b_2 \\ + \; 2a_1b_1 - a_2 \end{aligned} & 2a_0b_1 - a_1 \\
+    b_1^4 - 3b_1^2b_2 + b_2^2 & -b_1^3 + 2b_1b_2 & b_1^2 - b_2 & \begin{aligned} 4a_0b_1^3-6a_0b_1b_2- 3a_1b_1^2 \\  + \; 2a_1b_2 + 2a_2b_1 \end{aligned} & \begin{aligned} -3a_0b_1^2 + 2a_0b_2 \\ + \; 2a_1b_1 - a_2 \end{aligned}
+    \end{bmatrix} $$
+    <p>
+    We iterate to find the parameters, and then we ultimately have:
+    </p>
+    $$ x[k+1] = e^{AT} x[k] + \sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} Bu[k] $$
+    <p>
+    where \(\sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} \) is approximated using the [2/2] Pade approximation we found above.
+    </p>
+  </div>
+
+</div>
+
+
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;">
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <h3>Method Comparison</h3>
+    <p>
+    The plot below shows the state vector comparison between the five methods for the scenario where mass 2 has an initial velocity moving to the left and there is a sinusoidal force on the first mass. I also include \(x_2-x_1\) which is the coupling length essentially or the distance between the cars. Below, I look at constraining this geometry assuming the trains connect and then the cars can only be so close and so far away from each other corresponding to how much the coupling can expand and compress. 
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 80%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/State_vector_model_comparison.png" alt="State vector comparison among methods" style="min-width: 200px; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>State vector vs time comparison for each method.</em></figcaption>
+  </figure>
+
+
+  <!-- Figure -->
+  <figure style="width: 80%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/State_vector_model_comparison_zoomed.png" alt="State vector comparison among methods" style="min-width: 200px; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>State vector vs time comparison for each method zoomed in on shorter time segment.</em></figcaption>
+  </figure>
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    We see that all the methods produce about the same results which isn't too surprising since the model is not very complicated. It was cool to get almost the same result using several different methods. The plot on the left is the whole simulation (40 seconds) and the one on the right zooms in on a shorter time segment to better appreciate the differences between the methods.
+    </p>
+    <p>
+    Below is a plot showing the force on the coupling from the spring, distance between cars, coupling, and relative speed of the cars (to each other). 
+    </p>
+
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Force_model_comparison.png" alt="Coupling force comparison among methods" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Force on coupling vs time comparison for each method.</em></figcaption>
+  </figure>
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    The methods again produce very similar results with the Explicit method giving the highest amplitude and Dual Time Stepping giving the smallest. This isn't too surprising since the Explicit method is a little more unstable than the Dual Time Stepping method. 
+    </p>
+    <p>
+    Below, I show the number of pseudo-time steps at each time step for the Dual Time Stepping method. It's interesting to see how many times the Dual Time Stepping method iterates per time step, especially compared to the Explicit method which only interates once. 
+    </p>
+
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Number_of_pseudo_time_steps_model_comparison.png" alt="# of dual time steps" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Number of pseudo-time steps at each time step.</em></figcaption>
+  </figure>
+</div>
+
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;">
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <h3>Constrained Geometry</h3>
+    <p>
+    I wanted to look at the scenario where the coupling geometry is constrained meaning it can only expand and compress so much. I would then have:
+    </p>
+    $$ l_{min} \le (x_2-x_1) \le l_{max} $$
+    <p>
+    To do this, I assume that the collisions are perfectly elastic so I conserve both momentum and energy. I also iterate on my time step when I exceed my bounds. I use a bisection search method to find the time step that results in my distance between the cars meeting the lower or upper bound, then apply my elastic collision conditions (balance momentum and kinetic energy). The state vector comparison is shown below:
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/state_vector_constrained.png" alt="State vector for constrained and not constrained geometry cases" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>State vector for constrained and not constrained geometry cases.</em></figcaption>
+  </figure>
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    To really show the differences I show two more plots below. The first shows the distance between cars, \(x_2-x_1\), and the speeds of the cars and the second plot shows the same but zooms in on the beginning of the simulation where you can see the bouncing around in the constrained case. 
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/coupling_length_and_speed_constrained.png" alt="Coupling length and speeds" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Coupling length and speeds.</em></figcaption>
+  </figure>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/coupling_length_and_speed_constrained_zoomed.png" alt="Coupling length and speeds zoomed in on beginning" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Coupling length and speeds zoomed in on beginning.</em></figcaption>
+  </figure>
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    It's cool to see in the constrained case, how the speeds reverse and how the simulation shows some banging around of the cars before they settle and start to follow the unconstrained case. I set the limits to be: \(l_{min}=-0.2 \, m,l_{max}=0.2 \, m\). The distance is really a delta length from the resting length. 
+    </p>
+  </div>
+
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <h3>Conservation of Energy</h3>
+    <p>
+    I wanted to look at the conservation of energy since we are putting energy into the system, removing it via friction and the damper, storing it in the spring, and also have the kinetic energy of the cars. We have for the conservation of energy:
+    </p>
+    $$ (KE+PE)_o + \int_0^t (Input Energy) dt - \int_0^t (Friction Energy) dt - \int_0^t (Damper Energy) dt = KE(t) + PE(t) $$
+    $$ (KE+PE)_o + \int_0^t (F_1 \dot{x}_1 + F_2 \dot{x}_2) dt - \int_0^t (f_1 \dot{x}_1 + f_2 \dot{x}_2) dt - \int_0^t c_{12}(\dot{x}_1 - \dot{x}_2)^2 dt $$
+    $$ = \frac{1}{2}(m_1 \dot{x}_1^2 + m_2 \dot{x}_2^2) + \frac{1}{2} k_{12} (x_1-x_2)^2 $$
+    <p>
+    Looking at the conservation of energy, we can plot all those terms and I can also bring all the terms on the RHS to the LHS so that I have an energy equation that is supposed to equal 0. I show all of this in the plot below using the Dual Time Stepping method for the same conditions as above and the not constrained case:
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Energy_Conservation.png" alt="Conservation of Energy" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Conservation of Energy.</em></figcaption>
+  </figure>
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    The plot shows high initial KE which we specify and then we quickly dissipate a lot of that energy and put some more energy into the system via the forcing function that is also dissipated using the damper and friction. More energy is dissipated through the damper than friction but the numbers I chose to use are fairly arbitrary so this might not be physically accurate. We do see how the forcing function is relatively weak and any energy we put into the system is dissipated rather quickly. 
+    </p>
+    <p>
+    The energy that the forcing function provides is oscillatory as well. This is because the velocity and the force functions are not perfectly aligned so there is oscillation. The forcing function energy and dissipation energies continuously increase since we are looking a the integral from the beginning. The current energy in the system is a function of the initial energy and history (how much energy has been added and removed).
+    </p>
+    <p>
+    Below I also show the total energy to see how accurate are we (the closer to 0, the better). The top plot shows total energy which is the equation I have when I bring all terms on the RHS to the LHS from my energy conservation equation. The bottom plot is that same equation but as a percent of the initial energy and input energy. 
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Total_Energy_Error.png" alt="Total Energy Error" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Total Energy Error.</em></figcaption>
+  </figure>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Total_Energy_Error_Percent.png" alt="Total Energy Error (as a percentage of input energy)" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Total Energy Error (as a percentage of input energy).</em></figcaption>
+  </figure>
+  
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    We see that the energy balance is quite close to 0 which is what we expect. There is some error due to the numerical integration. Also this error accumulates when we integrate for the input energy and dissipated energy (through friction and the damper).
+    </p>
+  </div>
+
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <h3>Force and Damper Dissipated Energy vs Initial Train Speed</h3>
+    <p>
+    I mentioned this briefly at the beginning but one application of this type of analysis and model is to look at the force the coupling experiences when trains are connecting to each other. One could also consider the total energy dissipated in the damper. I am only looking at the case with two cars and one is moving to connect to the other. For simplicity, I also ignore the geometry constraint that would apply in an actual application. 
+    </p>
+    <p>
+    Below I plot the max. force on the coupling vs initial car speed. I am not applying any forcing function but only give car 2 an initial velocity torwards car 1. I also plot the total energy dissipated in the damper vs car 2 initial velocity. 
+    </p>
+  </div>
+
+  <!-- Figure -->
+  <figure style="width: 70%; min-width: 200px; align-self: center">
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Force_Energy_vs_Speed.png" alt="Force and Energy vs Speed" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Force and Energy vs Speed.</em></figcaption>
+  </figure>
+
+  <!-- Text content -->
+  <div style="flex: 1; min-width: 250px;">
+    <p>
+    The speeds I looked at are most likely not that realistic but I wanted to use round numbers. 10 m/s would be quite the collision. Also, my other numbers, car mass, spring constant, damper coefficient, friction are mostly made up. 
+    </p>
+    <p>
+    The trends are interesting though. We see a linear function between force and velocity while we have a parabolic like shape between energy and speed.
+    </p>
+    <p>
+    I won't say more about this but it was interesting to model this and compare several methods. In the end, I could see how using Simscape could be beneficial but also building a better model in Python wouldn't seem like that much of a time/cost investment. 
+    </p>
   </div>
 
 </div>
