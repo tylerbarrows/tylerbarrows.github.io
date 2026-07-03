@@ -443,11 +443,11 @@
     <p>
     Introducing dual time stepping, we obtain:
     </p>
-    $$ \frac{dx_{k+1}}{dt'} - \frac{1}{\Delta t}(x_{k+1}-x_k) - ( Ax_{k+1}^{n} + Bu_{k+1} ) = 0 $$
+    $$ \frac{dx_{k+1}}{dt'} + ( \frac{1}{\Delta t}(x_{k+1}-x_k) - ( Ax_{k+1} + Bu_{k+1} )) = 0 $$
     <p>
     As \(t'\) approaches \(\infty \), we converge on the solution so we can use explict pseudo-time stepping:
     </p>
-    $$ \frac{1}{\Delta t'} (x_{k+1}^{n+1} - x_{k+1}^{n}) - \frac{1}{\Delta t}(x_{k+1}^{n}-x_k) - ( Ax_{k+1}^{n} + Bu_{k+1} ) = 0 $$
+    $$ \frac{1}{\Delta t'} (x_{k+1}^{n+1} - x_{k+1}^{n}) + ( \frac{1}{\Delta t}(x_{k+1}^{n}-x_k) - ( Ax_{k+1}^{n} + Bu_{k+1} ) ) = 0 $$
     <p>
     We also introduce some limitations on the psuedo-time step, \(\Delta t'\), so that we don't have oscillations. So dual time stepping is an implict method and we can tolerate larger time steps comapred to the explicit method and should in general have a more stable and robust solver. 
     </p>
