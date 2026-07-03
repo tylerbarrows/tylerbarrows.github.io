@@ -84,7 +84,7 @@ nav_order: 2
 
 ---
 
-<!-- # [Kalman Filter Project](kalmanfilter.html) -->
+<!-- # [Magnet Model Project](magnetModel.html) -->
 
 <div id='magnetModel' style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
 
