@@ -90,7 +90,7 @@ nav_order: 2
 
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
-    <h1><a href="magnetModel.html">Magnet Model</a></h1>
+    <h1><a href="magnetmodel.html">Magnet Model</a></h1>
     <p>
     The idea to model two magnets and see if I could capture the phsyics was inspired by reading
     Volume II of The Feynman Lectures on Physics. I have been meaning to improve my electromagnetic knowledge and I thought it would be cool if I could model two magnetic blocks assuming that each magnet could be represented by a magnetic moment. I know this isn't completely physically representative and that the magnetic dipole derivation is really only appropriate for finding the fields (electric and magnetic) far away from the dipole. I figured if I assumed that the dipole is small and that by considering the fields outside of the magnetic block, I could get away with that. This is basically assuming that the magnet is large enough and the magnet weak enough, that a single magnetic dipole approximation for each magnet is sufficient. 
