@@ -1031,7 +1031,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    As explained above, we will focus on momentum in the x direction to simplify the explanation. We have that the change of momentum in the control volume in the x direction is equal to the sum of momentum entering and exiting the control volume in the x direction plus the sum of the body and surface forces. Body forces include pressure and any others (such as gravity but we ignore gravity here). Surface forces are mostly viscous forces (e.g., friction).
+    As explained above, we will focus on momentum in the x direction to simplify the explanation. We have that the change of momentum in the control volume in the x direction is equal to the sum of momentum entering and exiting the control volume in the x direction plus the sum of the body and surface forces. Body forces include gravity but we ignore gravity here. Surface forces are mostly pressure and viscous forces (e.g., friction).
     </p>
     <p>
     We can write this as a differential equation where we have:
@@ -1065,7 +1065,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     $$\frac {\partial (\rho u)}{\partial t} = - \nabla \cdot (\rho u \vec{U}) + \frac {\partial }{\partial x} \tau_{xx} + \frac {\partial }{\partial y} \tau_{yx} + \frac {\partial }{\partial z} \tau_{zx} - \frac {\partial }{\partial x} P$$
     <p>and similarly for the y and z directions:</p>
     $$\frac {\partial (\rho v)}{\partial t} = - \nabla \cdot (\rho v \vec{U}) + \frac {\partial }{\partial x} \tau_{xy} + \frac {\partial }{\partial y} \tau_{yy} + \frac {\partial }{\partial z} \tau_{zy} - \frac {\partial }{\partial y} P$$
-    $$\frac {\partial (\rho w)}{\partial t} = - \nabla \cdot (\rho w \vec{U}) + \frac {\partial }{\partial x} \tau_{xz} + \frac {\partial }{\partial y} \tau_{yz} + \frac {\partial }{\partial z} \tau_{zz} - \frac {\partial }{\partial x} P$$
+    $$\frac {\partial (\rho w)}{\partial t} = - \nabla \cdot (\rho w \vec{U}) + \frac {\partial }{\partial x} \tau_{xz} + \frac {\partial }{\partial y} \tau_{yz} + \frac {\partial }{\partial z} \tau_{zz} - \frac {\partial }{\partial z} P$$
     <p>Since momentum is directional, when looking at the differential form of momentum, it's not easy to simply to one equation but we have one equation per direction. For the integral form, we can simply to one direction (with a little handwaving to make it look clean). For this, we can first look at the x component and simply our viscous forces:</p>
     $$\frac {\partial (\rho u)}{\partial t} = - \nabla \cdot (\rho u \vec{U}) + \nabla \cdot \sigma_x - \frac {\partial }{\partial x} P$$
     <p>where \(\sigma_x = (\tau_{xx}, \tau_{yx}, \tau_{zx})\). We then can integrate around our volume:</p>
@@ -1101,7 +1101,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    Next, we can look at the conservation of energy. Energy doesn’t have a direction but for body forces, our assumptions on the directions influences if the work done on the control volume is positive or negative. 
+    Next, we can look at the conservation of energy. Energy doesn’t have a direction but for surface forces, our assumptions on the directions influences if the work done on the control volume is positive or negative. 
     </p>
   </div>
 
@@ -1142,7 +1142,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     change of energy against time = (energy in - energy out) + sum of work done against control volume + any other heat sources within control volume (we neglect heat sources but they can occur in nature)
     </p>
     <p>change of energy:</p>
-    $$\frac {\partial \rho (e+|\bar{U}|^2)}{\partial t} \, dV$$
+    $$\frac {\partial \rho (e+\frac{1}{2}|\bar{U}|^2)}{\partial t} \, dV$$
     <p>flow of energy in - flow of energy out:</p>
     $$\{[u \rho (e+\frac{u^2}{2}+\frac{v^2}{2}+\frac{w^2}{2})]_x -  [u \rho (e+\frac{u^2}{2}+\frac{v^2}{2}+\frac{w^2}{2})]_{x+dx}\}dydz $$
     $$+ \: \{[v \rho (e+\frac{u^2}{2}+\frac{v^2}{2}+\frac{w^2}{2})]_y - [v \rho (e+\frac{u^2}{2}+\frac{v^2}{2}+\frac{w^2}{2})]_{y+dy}\}dxdz $$
@@ -1162,9 +1162,9 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     $$= \: - \frac{\partial q_x^"}{\partial x}dV - \frac{\partial q_y^"}{\partial y}dV  - \frac{\partial q_z^"}{\partial z}dV = - \nabla \cdot \bar{q^"} dV$$  
     <p>where \(\bar{q^"}=(q_x^",q_y^",q_z^")\) and \(q_x^"=-k\frac{\partial T}{\partial x}\) (and similar for the other directions)</p>
     <p>Combining everything gives the differential form:</p>
-    $$\frac {\partial \rho (e+|\bar{U}|^2)}{\partial t} = -\nabla \cdot \bar{U} \rho (e + \frac{|\bar{U}|^2}{2}) + \nabla \cdot \bar{\sigma}^T \bar{U} - \nabla \cdot \bar{U}P - \nabla \cdot \bar{q^"} $$
+    $$\frac {\partial \rho (e+\frac{1}{2}|\bar{U}|^2)}{\partial t} = -\nabla \cdot \bar{U} \rho (e + \frac{|\bar{U}|^2}{2}) + \nabla \cdot \bar{\sigma}^T \bar{U} - \nabla \cdot \bar{U}P - \nabla \cdot \bar{q^"} $$
     <p>We can use the divergence theorem directly on the RHS and obtain the integral form:</p>
-    $$\int_V\frac {\partial \rho (e+|\bar{U}|^2)}{\partial t} \, dV = \int ( - \bar{U} \rho (e + \frac{|\bar{U}|^2}{2}) + \bar{\sigma}^T \bar{U} - \bar{U}P - \bar{q^"} ) \cdot \hat{n} \, dS$$
+    $$\int_V\frac {\partial \rho (e+\frac{1}{2}|\bar{U}|^2)}{\partial t} \, dV = \int ( - \bar{U} \rho (e + \frac{|\bar{U}|^2}{2}) + \bar{\sigma}^T \bar{U} - \bar{U}P - \bar{q^"} ) \cdot \hat{n} \, dS$$
     <p>
     I use the differential form for the derivation. We’ll see below but I also use the differential form for implementing the 1D conservation equations in the model. The integral form has some advantages (e.g., easier to handle complex geometries, easier to capture discontinuities, more flexibility with numerical techniques) when implementing the equations into a model but we will focus on the differential form for now. I find that the differential form is a little easier to understand and derive. 
     </p>
@@ -1225,7 +1225,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     We start with:
     </p>
     <!-- $$\frac{\partial f}{\partial x}$$ -->
-    $$\frac{\partial \rho dV}{\partial t} = [(\rho  A)_x - (\rho u A)_{x+dx}]$$
+    $$\frac{\partial \rho dV}{\partial t} = [(\rho u A)_x - (\rho u A)_{x+dx}]$$
     $$\frac{\partial (\rho A dx)}{\partial t} = -\frac{\partial (\rho u A)}{\partial x}dx$$
     <p>Simplifying gives:</p>
     $$A \frac{\partial \rho}{\partial t} = -\frac{\partial (\rho u A)}{\partial x}$$
@@ -1247,7 +1247,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     change of momentum in the x direction = (momentum in - momentum out)x + sum of body forces (in x direction) and sum of viscous forces (in x direction)
     </p>
     <p>
-    We do have new body forces due to the change in area compared to the general case above. We say that the pressure on this face (slanted face due to the change in area) is the average of the inlet and outlet pressures as shown. This force is acting against the face and we can see that the force from the pressure will be perpendicular to that face. From the symmetry, we see that the forces in the y direction from the top and bottom face will cancel. The force in the x direction is new and we have one part from the top face and a second from the bottom face. From the geometry, we know that the x component is F * cos(pi/2-theta) where cos(pi/2-theta) = sin(theta) and sin(theta) = dA/2 / sqrt(dx^2+(dA/2)^2). We note that our dA is assumed positive so we add this pressure force in the x direction. If we assumed dA was negative, we would be subtracting and also have -dA so we would get the same result.  
+    We do have new surface forces due to the change in area compared to the general case above. We say that the pressure on this face (slanted face due to the change in area) is the average of the inlet and outlet pressures as shown. This force is acting against the face and we can see that the force from the pressure will be perpendicular to that face. From the symmetry, we see that the forces in the y direction from the top and bottom face will cancel. The force in the x direction is new and we have one part from the top face and a second from the bottom face. From the geometry, we know that the x component is F * cos(pi/2-theta) where cos(pi/2-theta) = sin(theta) and sin(theta) = dA/2 / sqrt(dx^2+(dA/2)^2). We note that our dA is assumed positive so we add this pressure force in the x direction. If we assumed dA was negative, we would be subtracting and also have -dA so we would get the same result.  
     </p>
 
   </div>
@@ -1273,8 +1273,8 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     <p>We simplify and obtain:</p>
     $$A \frac{\partial (\rho u)}{\partial t} = -\frac{\partial [u(\rho u A)]}{\partial x} - \frac{\partial PA}{\partial x} + P \frac{dA}{dx} + \frac{1}{2} \frac{\partial P}{\partial x}dA$$
     <p>The differential form is then:</p>
-    $$\frac{\partial (\rho u)}{\partial t} = -\frac{1}{A} \frac{\partial [u(\rho u A)]}{\partial x} - \frac{1}{A} \frac{\partial PA}{\partial x} + P \frac{dA}{dx} + \frac{1}{2} \frac{\partial P}{\partial x} \frac{dA}{A}$$
-    $$\frac{\partial (\rho u)}{\partial t} = -\frac{1}{A} \frac{\partial [u(\rho u A)]}{\partial x} - \frac{1}{A} \frac{\partial PA}{\partial x} + P \frac{dA}{dx} + \frac{1}{2} \frac{\partial P}{\partial x} d \ln (A)$$
+    $$\frac{\partial (\rho u)}{\partial t} = -\frac{1}{A} \frac{\partial [u(\rho u A)]}{\partial x} - \frac{1}{A} \frac{\partial PA}{\partial x} + \frac{1}{A} P \frac{dA}{dx} + \frac{1}{2} \frac{\partial P}{\partial x} \frac{dA}{A}$$
+    $$\frac{\partial (\rho u)}{\partial t} = -\frac{1}{A} \frac{\partial [u(\rho u A)]}{\partial x} - \frac{1}{A} \frac{\partial PA}{\partial x} + \frac{1}{A} P \frac{dA}{dx} + \frac{1}{2} \frac{\partial P}{\partial x} d \ln (A)$$
 
   </div>
 
@@ -1294,10 +1294,10 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     We show in the schematic our new force on the slanted face that we found in the momentum section above for the 1D case. We can then say that we have a new energy term from that force and we can use the average of the inlet and outlet velocity and the force term to get a new energy term as shown in the schematic on the right. THIS IS WRONG.  
     </p>
     <p>
-    This is wrong because no fluid is passing through the new slanted face so no work is being done the fluid in the control volume from that force. It is true that the force should be accounted for in the momentum equation since it is a body force that is new because of the changing area (compared to the constant area). However, since no fluid is passing through that surface, there is no work being done on the fluid from that force. This is a situation where one needs to be careful. It can be easy to take the new force in the x direction and then take the average velocity and say there must be a new energy term. This is not correct because physically no flow is coming across that boundary. If we did have flow, then there would be a new energy term.
+    This is wrong because no fluid is passing through the new slanted face so no work is being done on the fluid in the control volume from that force. It is true that the force should be accounted for in the momentum equation since it is a surface force that is new because of the changing area (compared to the constant area). However, since no fluid is passing through that surface, there is no work being done on the fluid from that force. This is a situation where one needs to be careful. It can be easy to take the new force in the x direction and then take the average velocity and say there must be a new energy term. This is not correct because physically no flow is coming across that boundary. If we did have flow, then there would be a new energy term.
     </p>
     <p>
-    We still need to modify the energy equation to account for the area change when looking at the body forces and energy flow but we don’t have to add a new term for any extra energy from the different geometry. 
+    We still need to modify the energy equation to account for the area change when looking at the surface forces and energy flow but we don’t have to add a new term for any extra energy from the different geometry. 
     </p>
 
   </div>
@@ -1427,7 +1427,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     <p>Starting with the equations in differential form:</p>
     $$\frac{\partial \rho}{\partial t}=-\frac{1}{A} \frac{\partial (\rho u A)}{\partial x}$$
     $$\frac{\partial (\rho u)}{\partial t} = -\frac{1}{A} \frac{\partial (\rho u^2 A)}{\partial x} - \frac{\partial P}{\partial x}$$
-    $$\frac{[\rho (e+\frac{u^2}{2})]}{\partial t}=-\frac{1}{A}\frac{\partial[u \rho (e + \frac{u^2}{2})A]}{\partial x} - \frac{1}{A}\frac{\partial (uPA)}{\partial x} - \frac{1}{A}\frac{\partial (q^" A)}{\partial x} + u P \frac{1}{A}\frac{dA}{dx}$$
+    $$\frac{\partial[\rho (e+\frac{u^2}{2})]}{\partial t}=-\frac{1}{A}\frac{\partial[u \rho (e + \frac{u^2}{2})A]}{\partial x} - \frac{1}{A}\frac{\partial (uPA)}{\partial x} - \frac{1}{A}\frac{\partial (q^" A)}{\partial x} + u P \frac{1}{A}\frac{dA}{dx}$$
     <p>
     I refer to the pdf linked at the top of the page for all the details in simplifying the equations. To simplify the momentum equation, we first multiply the conservation of mass equation by \(u\) and then substract that from the conservation of momentum. 
     </p>
