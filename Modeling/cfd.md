@@ -80,7 +80,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
      <li>Pressure and temperature inlet conditions might make the most sense physically. Imagine having a source at some pressure and temperature and allowing the fluid to flow through the valve (geometry). You wouldn’t want to specify say pressure and velocity but allow velocity to fall out of the solution</li>
      <li>Pressure as the outlet condition makes sense physically too. You essentially fix the back pressure and allow the fluid to flow (in a way, the back pressure is only fixed far away from the outlet but we ignore this - when we expand to 2D, we can involve this) (the pressure at the outlet is not fixed in reality but will be a function of pressure waves in the geometry)</li>
      <li>When entering the geometry, be mindful that there is symmetry about the axial axis meaning that diameter of the valve is only a function of axial location</li>
-     <li>The gas properties can be changed (currently air is used) and the model can be eventually expanded to include real fluids with some modifications needed, particularly in the energy equation (I did this for Hydrogen at GE Aerospace where H2 behaves strangely as a liquid)</li>
+     <li>The gas properties can be changed (currently air is used) and the model can be eventually expanded to include real fluids with some modifications needed, particularly in the energy equation (I did this for Hydrogen at GE Aerospace where liquid H2 requires use of real fluid properties, instead of simplified equations of state)</li>
     </ul>
     <p>
     Note that in the following examples, some of the solution finding parameters (artificial viscosity coefficient, solution error, number of max. time steps, etc.) were modified for each solution, mainly for visual and time saving reasons. For some solutions, a smaller max. error (used in convergence decisions) can be used to speed up the solution with minimal change to the final steady state solution.
@@ -425,7 +425,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     Steady state results show what you would expect for a subsonic case, namely, pressure and temperature (and therefore density) dropping as you progress further into the converging section with velocity increasing. In the diverging section, the pressure starts to increase as the velocity starts to decrease. Temperature also starts to increase to conserve energy.
     </p>
     <p>
-    We can compare the CFD result to an isentropic solution using conservation of mass, conservation of momentum, conservation of energy, and the isentropic expansion equations. Across the shock, we assume negligible shock width so that mass, momentum, and energy are conserved with no friction. 
+    We can compare the CFD result to an isentropic solution using conservation of mass, conservation of momentum, conservation of energy, and the isentropic expansion equations. 
     </p>
     <p>
     Both results give good agreement with isentropic solution almost completely covering the CFD curves.
@@ -442,7 +442,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     Interestingly, the time based plots (right) show that this case takes much longer compared to the other examples to reach a steady state value. This is probably due to the smaller pressure difference between inlet and outlet, and therefore the smaller velocities with this example slow down the transfer of momentum and energy.
     </p>
     <p>
-    We see that the velocity at the outlet reaches a higher velocity than the inlet which makes sense since we specified a higher pressure at the inlet then the outlet. 
+    We see that the velocity at the outlet reaches a higher velocity than the inlet which makes sense since we specified smaller area at the outlet. 
     </p>
     <p>
     We also see that the enthalpy at the inlet and outlet converge to the same value. Little wiggles in enthalpy and velocity could be due to pressure waves traveling back and forth. We would need to look at more pressure curves and could also look at pressure vs x (for different time steps close to each other) to evaluate how pressure waves could be going back and forth in the geometry. 
@@ -468,13 +468,13 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    Our Mach number plot (Mach number vs x on left) shows how the Mach number still peaks at the throat which is expected since that is the point where the velocity is the lowest. 
+    Our Mach number plot (Mach number vs x on left) shows how the Mach number still peaks at the throat which is expected since that is the point where the velocity is the highest. 
     </p>
     <p>
-    The outlet area is smaller than the inlet velocity so we have a higher velocity at the outlet compared to the inlet. 
+    The outlet area is smaller than the inlet area so we have a higher velocity at the outlet compared to the inlet. 
     </p>
     <p>
-    Our Mach number curve is very smooth with sharp increases and decreases near the peak at the throat.
+    Our Mach number curve has sharp increases and decreases near the peak at the throat.
     </p>
   </div>
 
@@ -711,7 +711,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     The solution for Example 5a fails to converge so we will only look at the time based plot and explain a little why it failed.
     </p>
     <p>
-    Setting the initial velocity to 0 resulted in the model trying to find a solution to a converging geometry with the wrong boundary conditions. We specify the inlet conditions (2 properties and let velocity float) and only specify one outlet property. This leads to an unstable solution and the solution starts to grow uncontrollably (see the temperature curve for the outlet - in the converging example, the temperature needs to be specified at the inlet).
+    Setting the initial velocity to 0 resulted in the model trying to find a solution to a converging geometry with the wrong boundary conditions specified. We specify the inlet conditions (2 properties and let velocity float) and only specify one outlet property. This leads to an unstable solution and the solution starts to grow uncontrollably (see the temperature curve for the outlet - in the converging example, the temperature needs to be specified at the inlet).
     </p>
     <p>
     You can see how the model starts to say the velocity should be negative since the flow is going from high pressure to low pressure. We are trying to recreate the subsonic diverging section result from the converging-diverging valve but having the velocity initially set to 0 makes this impossible. It’s hard to imagine physically this initial set up resulting in the desired solution.
