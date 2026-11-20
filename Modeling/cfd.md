@@ -281,7 +281,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    Steady state results show what you would expect, namely, pressure and temperature (and therefore density) dropping as you progress further into the converging section with velocity increasing. At the throat, flow is choked and then supersonic in the diverging section until the shock (including artificial viscosity is key to capturing the shock, without it the solution starts to grow and oscillate around the shock leading to the model crashing.
+    Steady state results show what you would expect, namely, pressure and temperature (and therefore density) dropping as you progress further into the converging section with velocity increasing. At the throat, flow is choked and then supersonic in the diverging section until the shock (including artificial viscosity is key to capturing the shock, without it the solution starts to grow and oscillate around the shock leading to the model crashing).
     </p>
     <p>
     We can compare the CFD result to an isentropic solution using conservation of mass, conservation of momentum, conservation of energy, and the isentropic expansion equations. Across the shock, we assume negligible shock width so that mass, momentum, and energy are conserved with no friction. 
@@ -304,7 +304,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     The time based results show how the pressure and temperature quickly converge to their correct values while the velocity takes a little longer (which is expected since initial velocity was set to 0)
     </p>
     <p>
-    The plots also show enthalpy which we expect to be constant since energy is conserved but since we observed a difference between the CFD and Isentropic temperature curves in the steady state result, it’s not surprising that the enthalpy at the inlet and outlet don’t converge. The enthalpy difference is about 10,00 J/kg and the temperature difference in the steady state plot was about 10 deg C. Approximating cp of air to be 1,000 J/kg/K and the difference seems to be explained by that temperature difference in the steady state response.
+    The plots also show enthalpy which we expect to be constant since energy is conserved but since we observed a difference between the CFD and Isentropic temperature curves in the steady state result, it’s not surprising that the enthalpy at the inlet and outlet don’t converge. The enthalpy difference is about 10,000 J/kg and the temperature difference in the steady state plot was about 10 deg C. Approximating cp of air to be 1,000 J/kg/K and the difference seems to be explained by that temperature difference in the steady state response.
     </p>
     <p>
     Our Mach number plot follows the same pattern as the velocity plot.
@@ -724,7 +724,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
 
 <div id='example5b' style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 250px;">
-  <p><h2>Example 5a: Diverging solution (no solution found)</h2></p>
+  <p><h2>Example 5b: Diverging solution (no solution found)</h2></p>
   <p>
   In this example, we are looking for the diverging section solution for the subsonic case. In addition to our inputs listed below, we also have our initial velocity set to 100 throughout the geometry. The solution fails to converge.
   </p>
@@ -941,7 +941,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
   <!-- Figure -->
   <figure style="flex: 0 0 50%; min-width: 200px; align-self: center">
     <img src="/assets/cfd/Diverging_Example_5c/Figure_3.png" alt="Iterations per time step for Example 5c." style="width:100%; border-radius:5px;">
-    <figcaption style="text-align:center;"><em>Iterations per time step for Example 5c..</em></figcaption>
+    <figcaption style="text-align:center;"><em>Iterations per time step for Example 5c.</em></figcaption>
   </figure>
 
 </div>
@@ -1003,7 +1003,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     $$\frac{\partial \rho}{\partial t}dxdydz = -\frac{\partial \rho u}{\partial x}dxdydz - \frac{\partial \rho v}{\partial y}dxdydz - \frac{\partial \rho w}{\partial z}dxdydz$$
     <p>Simplifying gives:</p>
     $$\frac{\partial \rho}{\partial t} = -\frac{\partial \rho u}{\partial x} - \frac{\partial \rho v}{\partial y} - \frac{\partial \rho w}{\partial z}$$
-    <p>This gives rise to the differential form of the conservaiton of mass:</p>
+    <p>This gives rise to the differential form of the conservation of mass:</p>
     $$\frac{\partial \rho}{\partial t} = - \nabla \cdot (\rho \vec{U})$$
     <p>where \(\vec{U} = (u,v,w)\)</p>
     <p>We get the integral form:</p>
@@ -1229,7 +1229,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     $$\frac{\partial (\rho A dx)}{\partial t} = -\frac{\partial (\rho u A)}{\partial x}dx$$
     <p>Simplifying gives:</p>
     $$A \frac{\partial \rho}{\partial t} = -\frac{\partial (\rho u A)}{\partial x}$$
-    <p>This gives rise to the differential form of the conservaiton of mass:</p>
+    <p>This gives rise to the differential form of the conservation of mass:</p>
     $$\frac{\partial \rho}{\partial t} = - \frac{1}{A} \frac{\partial (\rho u A)}{\partial x}$$
 
   </div>
@@ -1429,10 +1429,10 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     $$\frac{\partial (\rho u)}{\partial t} = -\frac{1}{A} \frac{\partial (\rho u^2 A)}{\partial x} - \frac{\partial P}{\partial x}$$
     $$\frac{\partial[\rho (e+\frac{u^2}{2})]}{\partial t}=-\frac{1}{A}\frac{\partial[u \rho (e + \frac{u^2}{2})A]}{\partial x} - \frac{1}{A}\frac{\partial (uPA)}{\partial x} - \frac{1}{A}\frac{\partial (q^" A)}{\partial x} + u P \frac{1}{A}\frac{dA}{dx}$$
     <p>
-    I refer to the pdf linked at the top of the page for all the details in simplifying the equations. To simplify the momentum equation, we first multiply the conservation of mass equation by \(u\) and then substract that from the conservation of momentum. 
+    I refer to the pdf linked at the top of the page for all the details in simplifying the equations. To simplify the momentum equation, we first multiply the conservation of mass equation by \(u\) and then subtract that from the conservation of momentum. 
     </p>
     <p>
-    The conservation of energy equation can be simplified by multiplying the conservation of momentum equation by u and subtracting from the conservation of energy equation. Then multiply conservation of mass by \(e\) and multiply conservation of mass by \(\frac{u^2}{2}\) and subtract from conservation of energy. We then only consider ideal gasses that obey \(P=\rho R T\). 
+    The conservation of energy equation can be simplified by multiplying the conservation of momentum equation by u and subtracting from the conservation of energy equation. Then multiply conservation of mass by \(e\) and multiply conservation of mass by \(\frac{u^2}{2}\) and subtract from conservation of energy. We then only consider ideal gases that obey \(P=\rho R T\). 
     </p>
     <p>
     When we further simplify this, we obtain:
@@ -1469,7 +1469,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     My method is based on Picard's method. To find a solution, we first find the time derivative based on the current step. We then find an approximation for the next time using the time derivatives we found at the current step. We then want to find the time derivative again at our approximated next step. We then use weights (X for time derivative found using current step, Y for time derivative found at approximated next step) to find a weighted time derivative. We then keep iterating on our approximated next step until we converge. We use a convergence error term to determine when the solution converges or not. Using the momentum equation again, this is described more below:
     </p>
     <p>
-    To make the solution more stable, we want to first guess (approximate) the values at \(n+1\), and tehn correct by iterating until we find a mostly implicit solution. This method should be called a semi-implicit iterative method since we alter the weights to be more or less implicit. 
+    To make the solution more stable, we want to first guess (approximate) the values at \(n+1\), and then correct by iterating until we find a mostly implicit solution. This method should be called a semi-implicit iterative method since we alter the weights to be more or less implicit. 
     </p>
     <p>
     First we find \(u_i^{n+1}\) by solving the equation below for \(u_i^{n+1}\):
@@ -1487,7 +1487,7 @@ Complete description with all details: [View PDF]( /assets/cfd/CFD.pdf ){:target
     The solution should approximate an implicit solution if \(Y>>X\). The same procedure is used for the other two conservation equations. The four variables, \(u,P,\rho,T\) are coupled with each other (with the ideal gas law being used as the fourth relationship) which can slow the solution down but with sufficient weights, the solution should remain stable. 
     </p>
     <p>
-    The last thing to mention in this section is that we introduce an artificial viscosity term. This term is needed for the cases where we have a supersonic velocity. Without it, the equations can blow up and become unstable (especially near the shock - one can take the artificial viscosity out of the code and see for themselves - it's difficult to get the solution to be stable without it). The artificial viscosity term is an emperical method I found in a CFD book. I don't know all the details of how it was found and I also forgot to include it in the pdf above (hopefully that is fixed soon). There are some minor (but still very important) details about choosing the time step and spatial step. One much consider the speed of sound and supersonic velocities since that is how information is communicated from node to node so it puts constraints on the spatial and time steps (you can't just choose arbitrarily). With all of these details, one can start to appreciate how CFD may be more of an art that initially thought. 
+    The last thing to mention in this section is that we introduce an artificial viscosity term. This term is needed for the cases where we have a supersonic velocity. Without it, the equations can blow up and become unstable (especially near the shock - one can take the artificial viscosity out of the code and see for themselves - it's difficult to get the solution to be stable without it). The artificial viscosity term is an empirical method I found in a CFD book. I don't know all the details of how it was found and I also forgot to include it in the pdf above (hopefully that is fixed soon). There are some minor (but still very important) details about choosing the time step and spatial step. One much consider the speed of sound and supersonic velocities since that is how information is communicated from node to node so it puts constraints on the spatial and time steps (you can't just choose arbitrarily). With all of these details, one can start to appreciate how CFD may be more of an art that initially thought. 
     </p>
 
   </div>
