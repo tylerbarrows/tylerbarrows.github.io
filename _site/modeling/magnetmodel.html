@@ -146,7 +146,7 @@
     $$ y = R_{y,o} - r \sin\theta $$
     $$ dy = -\sin\theta \, dr - r \cos\theta \, d\theta $$
     $$ R_{x,o} = r \cos\theta $$
-    $$ dr = \tan\theta \, d\theta $$
+    $$ dr = r\tan\theta \, d\theta $$
     <p>
     We can then use this to find \(\int{\frac{dy}{r}}\):
     </p>
@@ -181,7 +181,7 @@
     $$ \bar{T} = \bar{\mu} \times \bar{B} $$
     $$ \bar{B} = \nabla \times \bar{A} $$
     <p>
-    Feynman explains where the first two equations come from well. Basically the argument for the first equation is that work is defined as \(work=-\int F \cdot ds\) and for the case with a magnetic dipole in an external field (in our situation, one magnetic dipole represents one magnet and the other magnet produces the magnetic field), you can say \(F=\nabla(\bar{\mu} \cdot \bar{B})\). There are work sources that are neglected such as the work needed to sustain the magnetic field but those sources are neglected and what is left is called virtual work. You can also make the argument that the energy from the torque is \(dU=\bar{T} \cdot \bar{d \theta}\) which then gives (assuming torque and \(\theta\) are in the same direction) \(dU=-|\bar{\mu}||\bar{B}|cos(\theta)+C=-\bar{\mu}\cdot\bar{B} + C\). Then use have \(work=-\int F \cdot ds\) and you can say \(F=\nabla (\bar{\mu}\cdot\bar{B})\). The way I interpret this argument is that a magnetic moment in a magnetic field stores energy and you can say that some force was needed to put the magnetic moment in that orientation in the field. That then represents the work you need to put in the system. 
+    Feynman explains where the first two equations come from well. Basically the argument for the first equation is that work is defined as \(work=-\int F \cdot ds\) and for the case with a magnetic dipole in an external field (in our situation, one magnetic dipole represents one magnet and the other magnet produces the magnetic field), you can say \(F=\nabla(\bar{\mu} \cdot \bar{B})\). There are work sources that are neglected such as the work needed to sustain the magnetic field but those sources are neglected and what is left is called virtual work. You can also make the argument that the energy from the torque is \(dU=\bar{T} \cdot \bar{d \theta}\) which then gives (assuming torque and \(\theta\) are in the same direction) \(dU=-|\bar{\mu}||\bar{B}|cos(\theta)+C=-\bar{\mu}\cdot\bar{B} + C\). Then use \(work=-\int F \cdot ds\) and you can say \(F=\nabla (\bar{\mu}\cdot\bar{B})\). The way I interpret this argument is that a magnetic moment in a magnetic field stores energy and you can say that some force was needed to put the magnetic moment in that orientation in the field. That then represents the work you need to put in the system. 
     </p>
     <p>
     The second equation (torque) might be a little easier to understand. Assuming again that a small current around a rectangular area is the magnetic dipole sitting in an external force, you can use \(F=q(\bar{E} + \bar{V} \times \bar{B})\) to find forces on each side of the dipole which create a torque balance on the dipole that can be represented by \(\bar{T} = \bar{\mu} \times \bar{B}\).
@@ -222,13 +222,13 @@
     We can now find our equations of motion and put these in a form that is most suitable for us. We have:
     </p>
     $$ \bar{F} = m \frac{d\bar{V}}{dt} $$
-    $$ \bar{T} = \frac{d (I \times \bar{\omega})}{dt} = \frac{d\bar{H}}{dt} $$
+    $$ \bar{T} = \frac{d (I \bar{\omega})}{dt} = \frac{d\bar{H}}{dt} $$
     <p>
-    In the above, \(m\) is our mass, \(\bar{V}\) is our velocity, \(I\) is our moment of inertial (matrix), and \(\omega\) is our angular velocity. We also have \(\bar{H}=I \times \bar{\omega}\). Since our magnets are rotating, it is best to expand our force and torque equations (that are expressed in the inertial frame) to use the body or rotating reference frame values:
+    In the above, \(m\) is our mass, \(\bar{V}\) is our velocity, \(I\) is our moment of inertial (matrix), and \(\omega\) is our angular velocity. We also have \(\bar{H}=I \bar{\omega}\). Since our magnets are rotating, it is best to expand our force and torque equations (that are expressed in the inertial frame) to use the body or rotating reference frame values:
     </p>
     $$ \bar{F} = (m\frac{d\bar{V}}{dt})_b + m \bar{\omega} \times \bar{V}_b $$
     $$ \bar{T} = (\frac{d\bar{H}}{dt})_b + \bar{\omega} \times \bar{H}_b $$
-    $$ \bar{T} = (\frac{d (I \times \bar{\omega})}{dt})_b + \bar{\omega} \times I_b \times \bar{\omega} $$
+    $$ \bar{T} = (\frac{d (I \bar{\omega})}{dt})_b + \bar{\omega} \times I_b \bar{\omega} $$
     <p>
     The \(\omega\) cross product term comes from the rotation. Basically we have in the general case \(\frac{d}{dt}\bar{f_i}=\frac{d}{dt}\bar{f_b}=\frac{d}{dt}(f_{b,x}\hat{i_b},f_{b,y}\hat{j_b},f_{b,z}\hat{k_b})\). Expanding the derivative gives \(\frac{d}{dt}\bar{f_b}=(\frac{df_{b,x}}{dt}\hat{i_b},\frac{f_{b,y}}{dt}\hat{j_b},\frac{f_{b,z}}{dt}\hat{k_b})+(f_{b,x}\frac{d\hat{i_b}}{dt},f_{b,y}\frac{\hat{j_b}}{dt},f_{b,z}\frac{d\hat{k_b}}{dt})=\frac{d\bar{f_b}}{dt}=\bar{\omega}\times\bar{f_b}\). It's easiest to understand and work this out in the 2D case and generalize to the 3D case. Subscript \(b\) denotes body frame compared to inertial frame. We find the forces and torques in the inertial frame (non-rotating frame) but we use the velocities and moment of inertia in the rotating frame. Since we are not considering any deformities, our moment of inertia matrix stays constant. 
     </p>
@@ -266,7 +266,7 @@
     $$ R = \begin{bmatrix}
     q_0^2+q_1^2-q_2^2-q_3^2 &amp; 2(q_1q_2-q_0q_3) &amp; 2(q_1q_3+q_0q_2) \\
     2(q_2q_1+q_0q_3) &amp; q_0^2+q_2^2-q_1^2-q_3^2 &amp; 2(q_2q_3-q_0q_1) \\
-    2(q_1q_3-q_0q_2) &amp; 2(q_2q-3+q_0q_1) &amp; q_0^2+2_3^2-q_1^2-q_2^2 \end{bmatrix} $$
+    2(q_1q_3-q_0q_2) &amp; 2(q_2q_3+q_0q_1) &amp; q_0^2+q_3^2-q_1^2-q_2^2 \end{bmatrix} $$
     <p>
     Using the above, we can translate between the quaternion and the corresponding rotation matrix. This will come in handy when we are plotting and troubleshooting. We can also show how if you can define two axis vectors in both frames (inertial or body/rotating), it is easy to build the rotation matrix and then get the quaternion. One can use:
     </p>
@@ -335,7 +335,7 @@
     $$ \dot{q} = \frac{1}{2} \Omega \times q $$
     $$ \Omega = \begin{bmatrix}
     0 &amp; -\omega_x &amp; -\omega_y &amp; -\omega_z \\
-    \omega_x &amp; 0 &amp; \omega_z &amp; \omega_y \\
+    \omega_x &amp; 0 &amp; \omega_z &amp; -\omega_y \\
     \omega_y &amp; -\omega_z &amp; 0 &amp; \omega_x \\
     \omega_z &amp; \omega_y &amp; -\omega_x &amp; 0 \end{bmatrix} $$
     <p>
@@ -373,7 +373,7 @@
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    Looking at the schematic, we note that A and B are separate. \(v\) is the normal in the direction seperating A and B and points from A to B. We know that the equation of a plane (or a line in the 2D case) is:
+    Looking at the schematic, we note that A and B are separate. \(v\) is the normal in the direction separating A and B and points from A to B. We know that the equation of a plane (or a line in the 2D case) is:
     </p>
     $$ (r-r_o) \cdot v = 0 $$
     <p>Looking at \(r_x\), we then have:</p>
@@ -386,7 +386,7 @@
     $$ r_y \cdot v \ge r_o \cdot v = c $$
     <p>Which is what the theorem says. This also extends to the 3D case which is what our magnet model will be.</p>
     <p>
-    Our collision detection method is based off this theorem. We can start with the simpler 2D case. If we have two non-overlapping rectangles, it's not hard to visualize that the seperating line must be parallel to one of the rectangles edges. For the 2D case with rectangles, we then have 4 directions to test corresponding to the two axes of each rectangle. This can be seen in the figure below where the seperating line is perpendicular to the \(y_B\) direction. 
+    Our collision detection method is based off this theorem. We can start with the simpler 2D case. If we have two non-overlapping rectangles, it's not hard to visualize that the separating line must be parallel to one of the rectangles edges. For the 2D case with rectangles, we then have 4 directions to test corresponding to the two axes of each rectangle. This can be seen in the figure below where the separating line is perpendicular to the \(y_B\) direction. 
     </p>
   </div>
 
@@ -399,7 +399,7 @@
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    We need to check along each direction (4 directions total for the 2D case, 15 total for the 3D case) and check for collision. We only need to find one direction that doesn't produce a collision. So for each direction, we have a vector which we still denote as \(v\). We also have a vector that goes from the center of one block to the center of the other. We denote this by \(T\). At this point, the direction of \(v\) and \(T\) doesn't matter. We then want to compare the sum of projection of each block in this direction to the projection of \(T\) in this direction. If the sum of the block projections is greater than the center to center projection, then we have an overlap which means collision in that direction. If it is the opposite, we have no collision in that direction and thus no collision at all since we can draw a line that seperates the blocks (see the figure below and above). 
+    We need to check along each direction (4 directions total for the 2D case, 15 total for the 3D case) and check for collision. We only need to find one direction that doesn't produce a collision. So for each direction, we have a vector which we still denote as \(v\). We also have a vector that goes from the center of one block to the center of the other. We denote this by \(T\). At this point, the direction of \(v\) and \(T\) doesn't matter. We then want to compare the sum of projection of each block in this direction to the projection of \(T\) in this direction. If the sum of the block projections is greater than the center to center projection, then we have an overlap which means collision in that direction. If it is the opposite, we have no collision in that direction and thus no collision at all since we can draw a line that separates the blocks (see the figure below and above). 
     </p>
   </div>
 
@@ -418,7 +418,7 @@
     $$ = |x_A \cdot n| \frac{l_A}{2} + |y_A \cdot n| \frac{w_A}{2} + |x_B \cdot n| \frac{l_B}{2} + |y_B \cdot n| \frac{w_B}{2} $$
     $$ Center-to-Center \, Vector \, Projection \, Sum = |T \cdot n| $$
     <p>
-    If the Block Projection Sum is greater than the Center-to-Center Vector Projection Sum, then we have a collision in that direction. If the Center-to-Center Vector Projection Sum is greater than the Block Projection Sum then we have no collision in that direction and no collision at all. We only need one direction to pass the collision test to say there is no collision. The schematic below shows what distances are calculated in the alogrithm so you can better understand what is happening. 
+    If the Block Projection Sum is greater than the Center-to-Center Vector Projection Sum, then we have a collision in that direction. If the Center-to-Center Vector Projection Sum is greater than the Block Projection Sum then we have no collision in that direction and no collision at all. We only need one direction to pass the collision test to say there is no collision. The schematic below shows what distances are calculated in the algorithm so you can better understand what is happening. 
     </p>
     </div>
   
@@ -437,7 +437,7 @@
     In the 2D case, we only need to check 4 directions. In the 3D case, we have 15 directions. 3 are for one magnet (block) and 3 more are for the second. The other 9 directions come from the cross products of the 3 for block A and 3 for block B. 
     </p>
     <p>
-    It's fairly intuitive to understand why we need to check the 3 axes of magnet A and the 3 axes of magnet B. The cross product directions are a little more difficult to understand. We will illustrate through this an example. The scenario where you need to check the cross product directions is the edge-edge case where the closest parts of each magnet to each other are part of the edges. The first 6 axes may fail to find edge-edge seperation. A face-edge seperation will be found using the first 6 axes as well as face-face which is a little more obvious. In the 2D case, we can only have face-face or face-edge so no need for cross products. 
+    It's fairly intuitive to understand why we need to check the 3 axes of magnet A and the 3 axes of magnet B. The cross product directions are a little more difficult to understand. We will illustrate through this an example. The scenario where you need to check the cross product directions is the edge-edge case where the closest parts of each magnet to each other are part of the edges. The first 6 axes may fail to find edge-edge separation. A face-edge separation will be found using the first 6 axes as well as face-face which is a little more obvious. In the 2D case, we can only have face-face or face-edge so no need for cross products. 
     </p>
     <p>
     In our example, we will show how the face-face checks (the 3 axes of each magnet so 6 axes in total). We will also show that the vector representing the smallest distance between each block is perpendicular to at least one axis of each magnet. This is part of the reason we need to check those axes. 
@@ -485,7 +485,7 @@
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    We see that if we take the sum of the absolute value of the projection of the red block's axes against the z direction and the absolute value of the projection of the blue block against the z direction, that we will have a larger number than the absolute value of the projection of the vector seperating the two block centers against the z direction. This is seen in the red block extending past the blue block. The sum of the projections of the red block against the z direction (really it's half of the projection since the block is symmetric, we are looking at projecting half the block from the center on to our axis), represents the distance along the z axis from the center of the red block to the tip of the red block. We see that this distance clearly intersects the blue block and therefore, no separation is found along this axis. 
+    We see that if we take the sum of the absolute value of the projection of the red block's axes against the z direction and the absolute value of the projection of the blue block against the z direction, that we will have a larger number than the absolute value of the projection of the vector separating the two block centers against the z direction. This is seen in the red block extending past the blue block. The sum of the projections of the red block against the z direction (really it's half of the projection since the block is symmetric, we are looking at projecting half the block from the center on to our axis), represents the distance along the z axis from the center of the red block to the tip of the red block. We see that this distance clearly intersects the blue block and therefore, no separation is found along this axis. 
     </p>
     <p>
     We can repeat the above for the other 5 axes (2 more from the blue block, 3 from the red) and reach the same conclusion. Clearly, the blocks don't intersect and this means we need to consider the cross products of the axes giving another 9 directions. 
@@ -639,7 +639,7 @@
     where \(N\) is the total number of overlap points. If a point is not in the overlap region, we don't include it. The above schematic illustrates how we determine if a point is within the overlap area. We first have the vector (\(T\)) from the center of Block B to the point we are testing. Then in that same direction (\(n\)) we find the vector the edge of block B in that direction (\(r\)). If the magnitude of \(r\) is greater than the magnitude of \(T\), we say that the point of interest is in the overlap area. 
     </p>
     <p>
-    For the non-overlapping case, we know that \(p_A\) and \(p_B\) will point to the edges of each respective block. We find the center to center vector, (\T\), and need to be careful about the direction. We define the direction of \(T\) to point from Block B to Block A. We need to be careful about the direction because we want to search for the minimum distance and need to look on the proper edges. Defining the direction of \(T\) helps us do that. 
+    For the non-overlapping case, we know that \(p_A\) and \(p_B\) will point to the edges of each respective block. We find the center to center vector, \(T\), and need to be careful about the direction. We define the direction of \(T\) to point from Block B to Block A. We need to be careful about the direction because we want to search for the minimum distance and need to look on the proper edges. Defining the direction of \(T\) helps us do that. 
     </p>
     <p>
     Once we find the right edges to search on, we begin at the corner of the collision face of block A. We will have two edges that we are interested in and starting at the corner helps us find the right edge to search in (also the corner might be the point that results in the minimum distance). 
@@ -664,7 +664,7 @@
     The Face-Edge collision has two options: edge of A collides with face of B and edge of B collides with face of A. For both of these cases, we take the same approach. We first find the correct edge and face. We use a similar strategy to the non-overlapping face-face collision where we use the center to center vector \(T\), and specify it's direction from B to A. We then check the dot product with the block axes to determine what directions we are interested in and use this to pick the correct edge and face. 
     </p>
     <p>
-    We then use a bisection search on the edge. We use the two end points as our initial min and max. For each point on the edge, we search along the face using the derivative of (\g\) until we minimize \(g\). We then step slightly in each direction on the edge to find the deritative of \(g\) from the edge point of view. We use this derivative to update our bounds on the bisection search. The process is illustrated below
+    We then use a bisection search on the edge. We use the two end points as our initial min and max. For each point on the edge, we search along the face using the derivative of \(g\) until we minimize \(g\). We then step slightly in each direction on the edge to find the derivative of \(g\) from the edge point of view. We use this derivative to update our bounds on the bisection search. The process is illustrated below
     </p>
   </div>
 
@@ -820,7 +820,7 @@
     I think the model is actually pretty cool and seems to capture the physics a lot better than I maybe thought it would be, potentially validating some of my thoughts earlier in this project. This is probably the most advanced side project model I have built. I have built some involved physics models for work that are close to the level of work that was needed for this. I did cut some corners to speed up the project and clearly spent very little time validating or fine tuning everything. I am happy with how this turned out though.
     </p>
     <p>
-    I know the math worked out but it's still cool to see the face-edge collision and the response. It's cool to actually see the red magnet bounce off the blue. I'm not sure if that actually happens or not (and I kinda doubt my phone camera can capture that. There other things I could try like putting some chalk on the red magnet edge and seeing if it leaves a mark on the blue magnet where the model suggests). 
+    I know the math worked out but it's still cool to see the face-edge collision and the response. It's cool to actually see the red magnet hit the blue and move. I'm not sure if that actually happens or not (and I kinda doubt my phone camera can capture that. There other things I could try like putting some chalk on the red magnet edge and seeing if it leaves a mark on the blue magnet where the model suggests). 
     </p>
     <p>
     I still have some work to do here and would like to look at other examples to see if I can find any errors or break the model. I am knee deep in an international move so some of that might have to wait til later ...

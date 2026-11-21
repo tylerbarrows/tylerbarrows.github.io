@@ -17,10 +17,10 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
       Batteries, in particular Li-Ion batteries, have received a lot of attention due to their high energy densities. This and their long cycle life make them attractive for a variety of applications. One of the challenges with Li-Ion batteries is their relatively flat voltage vs state of charge (SOC) characteristic. Compared to lead batteries, where the dV/dSOC slope magnitude is larger, it’s more difficult to calculate and find the SOC of a Li-Ion battery. 
     </p>
     <p>
-      Early in my career, I was working on an energy management project (optimizing batttery charging and discharging using grid and solar power) and this is where I first came across the Kalman filter. During that project, I didn't get to dive into battery SOC esimation technigues too much and this project is motivated by that. I wanted to really understand the Kalman filter and how to apply it. 
+      Early in my career, I was working on an energy management project (optimizing battery charging and discharging using grid and solar power) and this is where I first came across the Kalman filter. During that project, I didn't get to dive into battery SOC estimation techniques too much and this project is motivated by that. I wanted to really understand the Kalman filter and how to apply it. 
     </p>
     <p>
-      In this project, I show how to develop an equivalent circuit model of a lithium ion cell. Then I show how the Kalman filter can be derived and implement it using the equivalent circuit model. I compare results to the Coulomb counting method (e.g., current integration). It was a cool experience learning a little bit more about linear algebra and I got look at statistical theory a little bit which sparked a new interest in learning more about probability and statistics. 
+      In this project, I show how to develop an equivalent circuit model of a lithium ion cell. Then I show how the Kalman filter can be derived and implement it using the equivalent circuit model. I compare results to the Coulomb counting method (e.g., current integration). It was a cool experience learning a little bit more about linear algebra and I got to look at statistical theory a little bit which sparked a new interest in learning more about probability and statistics. 
     </p>
   </div>
 
@@ -39,7 +39,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     <p>The layout of this project will be as follows (click the links to go to a specific section):</p>
     <ol>
     <li><a href="#introduction">Introduction</a>: A description of the project and the end objective</li>
-    <li><a href="#equivalentCircuit">Model (equivalent circuit)</a>: Finding the equivalent cricuit model of the lithium ion battery</li>
+    <li><a href="#equivalentCircuit">Model (equivalent circuit)</a>: Finding the equivalent circuit model of the lithium ion battery</li>
     <li><a href="#kalmanFilter">Kalman Filter</a>: Derivation of the Kalman Filter (more specifically the Extended Kalman Filter)</li>
     <li><a href="#implementation">Implementation</a>: Implementing the Kalman filter and comparing against Coulomb counting (current integration)</li>
     <li><a href="#closingThoughts">Closing Thoughts</a>: Some final thoughts</li>
@@ -77,7 +77,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     <h2>Model (Equivalent Circuit)</h2>
     </p>
     <p>
-    Modeling the lithium ion cell as an equivalent circuit has several advantags. 
+    Modeling the lithium ion cell as an equivalent circuit has several advantages. 
     </p>
     <ul>
         <li>The equivalent circuit naturally gives a terminal voltage and current</li>
@@ -113,7 +113,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     </p>
     $$ \frac{dSOC}{dt} = -\frac{i}{3600 \, Q} $$
     <p>
-    We have \(Q\) is our nominal cell voltage capacity in Ah so we have the 3600 factor to go from hours to seconds. In the above, our current is positive when going out of the cell (discharging) and the sign convention for the voltage and SOC follows. 
+    We have \(Q\) is our nominal cell capacity in Ah so we have the 3600 factor to go from hours to seconds. In the above, our current is positive when going out of the cell (discharging) and the sign convention for the voltage and SOC follows. 
     </p>
     <p>
     I'll say more about the equations when we use them in the Kalman filter. We can see they are fairly straightforward. We can solve the RC circuit analytically easily and we will use this in the Kalman filter. 
@@ -158,7 +158,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     I first found the OCV vs SOC relationship and then found the values for \(R_0,R_1,C_1,R_2,C_2\). I'll first describe how I found the OCV vs SOC relationship. 
     </p>
     <p>
-    There were two tests I used to explore finding the OCV vs SOC data. The first was a Low Current test where it is assumed that the current is low enough and constant enough that the terminal voltage is approximately the same as the OCV voltage. This test is the first (top) figure on the right. In all the data sets, there is a charge (and discharge) capacity parameter. I use this to find the SOC. I'm not exactly sure how that parameter is measured by I use that for my SOC calculation. Voltage is the terminal voltage and current is the current applied to the cell. For more info, refer to the pdf. The other test is an Incremental Current test where a (higher) current is applied to the cell for a short increment. The cell is allowed to relax and settle between current increments. One can fit a OCV vs SOC curve using the increments then. This test is the second figure on the right. 
+    There were two tests I used to explore finding the OCV vs SOC data. The first was a Low Current test where it is assumed that the current is low enough and constant enough that the terminal voltage is approximately the same as the OCV voltage. This test is the first (top) figure on the right. In all the data sets, there is a charge (and discharge) capacity parameter. I use this to find the SOC. I'm not exactly sure how that parameter is but I use that for my SOC calculation. Voltage is the terminal voltage and current is the current applied to the cell. For more info, refer to the pdf. The other test is an Incremental Current test where a (higher) current is applied to the cell for a short increment. The cell is allowed to relax and settle between current increments. One can fit a OCV vs SOC curve using the increments then. This test is the second figure on the right. 
     </p>
   </div>
 
@@ -234,7 +234,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     On the right, I show a comparison of the RC circuit time constants. I was able to find a fast time constant (on order of 0.1 seconds) and slower time constant (two orders of magnitude slower). This does suggest that having a fast and slow RC circuit was somewhat valid. It would be interesting to really dive into the physics of the lithium ion cell to understand the driving mechanisms.  
     </p>
     <p>
-    I also show a comparison of the model and the actual terminal voltage for one of the DST data sets (at 25 deg. C starting at 80 % SOC). The model gives fairly good agreement with the actual data except at low SOCs. I discussed this earlier but the dynamcis become very apparement at low SOC. I would have liked exploring how the parameters could vary with SOC but I didn't get to this. This is a common mismatch between the model and the data. 
+    I also show a comparison of the model and the actual terminal voltage for one of the DST data sets (at 25 deg. C starting at 80 % SOC). The model gives fairly good agreement with the actual data except at low SOCs. I discussed this earlier but the dynamics become very apparent at low SOC. I would have liked exploring how the parameters could vary with SOC but I didn't get to this. This is a common mismatch between the model and the data. 
     </p>
   </div>
 
@@ -259,7 +259,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     <h2>Kalman Filter</h2>
     </p>
     <p>
-    In this section, I will walk through the Kalman filter derivation. I won't walk through all the details but all the details are included in the pdf at the top of the page. I will also add that the pdf doens't cover everything and that there are much better derivations and discussions of the Kalman filter online. I will highlight the main pieces of the Kalman filter shown in the diagram below:
+    In this section, I will walk through the Kalman filter derivation. I won't walk through all the details but all the details are included in the pdf at the top of the page. I will also add that the pdf doesn't cover everything and that there are much better derivations and discussions of the Kalman filter online. I will highlight the main pieces of the Kalman filter shown in the diagram below:
     </p>
   </div>
 
@@ -329,7 +329,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     $$ P_k^f = FP_{k-1}F^T + Q_k $$
     $$ F = \frac{df_x(x_{k-1}^a)}{dx} $$
     <p>
-    You can see our linearization in the \(F\) term. The term, \(Q_k\) represents the process noise covariance term. I have a subscript \(k\) to show that this term can change depending on the state but for our lithium ion application, we will hold that term constant. In our general case for the derivation, \(F\) is a row vector, \(1 \times n\), and \(P\) and \(Q\) are \(n \times n \). 
+    You can see our linearization in the \(F\) term. The term, \(Q_k\) represents the process noise covariance term. I have a subscript \(k\) to show that this term can change depending on the state but for our lithium ion application, we will hold that term constant. In our general case for the derivation, \(F\) is the Jacobian, \(n \times n\), and \(P\) and \(Q\) are \(n \times n \). 
     </p>
     <p>
     This completes the prediction step part of the Kalman filter.
@@ -360,7 +360,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     <p>
     We then have:
     </p>
-    $$ x_k^a = x_k^f + K_k[z_k-h(x_k^f-b_y(u_k))] $$
+    $$ x_k^a = x_k^f + K_k[z_k-h(x_k^f+b_y(u_k))] $$
     <p>
     We are now ready to find the Kalman gain. We plug this back into our error equation. We can then calculate our error covariance matrix, \(P\), again. We then have:
     </p>
@@ -448,7 +448,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     </p>
     $$ H = \begin{bmatrix} \frac{dV_{OCV}}{dSOC} -1 -1 -1 \end{bmatrix} $$
     <p>
-    We still need to find our covariance matrices for the process and measurement noise. For the both, we take a relatively simple approach. For the measurement noise, I will only show the RC circuit voltage as an example. For the RC circuit voltage, we have:
+    We still need to find our covariance matrices for the process and measurement noise. For the both, we take a relatively simple approach. For the process noise, I will only show the RC circuit voltage as an example. For the RC circuit voltage, we have:
     </p>
     $$ V_{i,k} = V_{i,k-1} e ^ {- \frac {\Delta t}{R_i C_i}} + R_i (1-e^{- \frac {\Delta t}{R_i C_i}}) i_{k-1}  $$ 
     <p>
@@ -603,7 +603,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
   We next compare the voltage estimates to the state voltages (estimated voltages based on the model). This is shown on the right. The first plot (Voltage comparison) shows the terminal voltage (Actual V) and the Kalman filter model voltage. We see fairly good agreement except torwards the end of the test where the SOC is low. This is most likely due to our OCV-SOC relationship/model being relatively poor at low SOC. 
   </p>
   <p>
-  The next plot shows the terminal voltage comparison, OCV voltage comparison (actual OCV is based on the actual SOC), \(V_0\) state, \(V_1\) state, and the \(V_2\) state. For the OCV comparison, we again see pretty good comparison between the actual and the model except at low SOC. This somewhat suggests that our low current test OCV-SOC relationship could be a better fit but I didn't explore this much. We see that \(V_0\) is higher magnitude that the other two RC circuits which isn't too surprising as we do expect some DC resistance across the cell. We see that the two RC circuit voltages, \(V_1\) and \(V_2\), are similar magnitude and vary significantly suggesting this test excites fast and flow dynamics. It's also interesting to note that \(V_0\) and \(V_1\) share a similar shape but are an order of magnitude different. 
+  The next plot shows the terminal voltage comparison, OCV voltage comparison (actual OCV is based on the actual SOC), \(V_0\) state, \(V_1\) state, and the \(V_2\) state. For the OCV comparison, we again see pretty good comparison between the actual and the model except at low SOC. This somewhat suggests that our low current test OCV-SOC relationship could be a better fit but I didn't explore this much. We see that \(V_0\) is higher magnitude that the other two RC circuits which isn't too surprising as we do expect some DC resistance across the cell. We see that the two RC circuit voltages, \(V_1\) and \(V_2\), are similar magnitude and vary significantly suggesting this test excites fast and slow dynamics. It's also interesting to note that \(V_0\) and \(V_1\) share a similar shape but are an order of magnitude different. 
   </p>
   <p>
   This test really shows all of the interesting parts of the model and shows some areas we might focus on if we were to improve the model.
@@ -840,7 +840,7 @@ Complete description with all details: [View PDF]( /assets/kalmanFilter/SOC_Kalm
     Exploring the Kalman filter was a cool experience and helped me improve my linear algebra skills, appreciate noise and measurement challenges, and also exposed me to probability and statistics (something I hope to explore more soon). 
     </p>
     <p>
-    I think one of the big takeaways from the Kalman filter is the importance of having a good model of the system and that special attention should be given to tuning based on data (something I ignored for now). It is easy to get carried away with the modeling but this showed me how important it is to understand the dynamics of the process under study and how to capture them. I think a good example here is how the data was given for different temperatures so it's natural to think temperature is a major driver but I think there's a good argument that paramters should also be a function of OCV (or SOC). Maybe I will explore this one day. Maybe having a physical model of the system would help better define this simpler model. 
+    I think one of the big takeaways from the Kalman filter is the importance of having a good model of the system and that special attention should be given to tuning based on data (something I ignored for now). It is easy to get carried away with the modeling but this showed me how important it is to understand the dynamics of the process under study and how to capture them. I think a good example here is how the data was given for different temperatures so it's natural to think temperature is a major driver but I think there's a good argument that parameters should also be a function of OCV (or SOC). Maybe I will explore this one day. Maybe having a physical model of the system would help better define this simpler model. 
     </p>
     <p>
     One of the things that has stuck out to me with control system design is how important it is to have a good model. Modeling is half the battle, sometimes more when it comes to designing a controller (before this setting the correct requirements and objectives is also very, very important - something completely ignored here). This was not surprising but helped reinforce what is really important in engineering challenges like this. 

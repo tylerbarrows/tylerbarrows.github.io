@@ -171,7 +171,7 @@ nav_order: 3
     <p>
     We have a quadratic equation now and can solve for \(cos(\theta)\):
     </p>
-    $$ cos(\theta) = \frac{-\alpha \pm \sqrt{\alpha^2 - 4}}{2} $$
+    $$ cos(\theta) = \frac{-\alpha \pm \sqrt{\alpha^2 + 4}}{2} $$
     <p>
     We have found a solution for the angle that only depends on gravity, rope mass density, and drag. All of these are assumed constant and gives us a constant angle so we conclude we have the straight line which is answer (B). This is also what the youtube video above shows from Veritasium. 
     </p>
@@ -187,7 +187,7 @@ nav_order: 3
     <tr>
       <td>0</td>
       <td>1</td>
-      <td>0</td>
+      <td>-1</td>
     </tr>
     <tr>
       <td>\(\infty\)</td>
@@ -196,7 +196,7 @@ nav_order: 3
     </tr>
   </table>
   <p>
-  From the table, we see that that \(\frac{-\alpha + \sqrt{\alpha^2 - 4}}{2}\) corresponds to our physical solution and while \(\frac{-\alpha - \sqrt{\alpha^2 - 4}}{2}\) is also a mathematical solution to the quadratic, it's not an actual physical solution since \(cos(\theta)\) is never \(-\infty\). Now we can check what values of \(\alpha\) correspond to what values of \(\theta\) and check our physical reasoning. We said above that when \(\alpha\) approaches 0, it represents a very light rope so we would expect \(\theta\) to also approach 0 meaning the rope is so light that any air resistance pushes the rope to be horizontal and be parallel with the ground. When \(\alpha\) approaches \(\infty\) we expect a very heavy rope with small air resistance so that the rope falls straight down giving us a \(\theta\) of 90 deg. In the table, below we calculate what values of \(\alpha\) give us what values of \(\theta\). 
+  From the table, we see that that \(\frac{-\alpha + \sqrt{\alpha^2 + 4}}{2}\) corresponds to our physical solution and while \(\frac{-\alpha - \sqrt{\alpha^2 + 4}}{2}\) is also a mathematical solution to the quadratic, it's not an actual physical solution since \(cos(\theta)\) is never \(-\infty\). Now we can check what values of \(\alpha\) correspond to what values of \(\theta\) and check our physical reasoning. We said above that when \(\alpha\) approaches 0, it represents a very light rope so we would expect \(\theta\) to also approach 0 meaning the rope is so light that any air resistance pushes the rope to be horizontal and be parallel with the ground. When \(\alpha\) approaches \(\infty\) we expect a very heavy rope with small air resistance so that the rope falls straight down giving us a \(\theta\) of 90 deg. In the table, below we calculate what values of \(\alpha\) give us what values of \(\theta\). 
   </p>
   <table border="1" style="margin-left:auto; margin-right:auto; border-collapse: collapse; width: 90%; text-align: center;">
     <tr>
@@ -258,7 +258,7 @@ nav_order: 3
     $$ T_s = -[K_D cos(\theta) sin(\theta) + \lambda g sin(\theta)] (s-L) $$
     $$ T_s = [K_D cos(\theta) sin(\theta) + \lambda g sin(\theta)] (L-s) $$
     <p>
-    There's a couple points to make here. First, tension is acting in the direction we assumed on our force balance (we know that \(0 \le \theta \le 90 \; deg.\) so that all parameters in the [ ] are positive). Any segment of rope that has it's end as the end of the rope will have gravity and air friction pulling in the \(s\) direction with tension pulling in the \(-s\) direction. We basically have tension in the rope due to gravity and air friction. We also note that tension is proportional to distance along the length of rope. 
+    There's a couple points to make here. First, tension is acting in the direction we assumed on our force balance (we know that \(0 \le \theta \le 90 \; deg.\) so that all parameters in the [ ] are positive). Any segment of rope that has it's end as the end of the rope will have gravity and air friction pulling in the \(s\) direction with tension pulling in the \(-s\) direction. We basically have tension in the rope due to gravity and air friction. We also note that tension is proportional to distance along the length of rope from the free end. 
     </p>
     <p>
     It's cool that such a simple problem can be very interesting.
@@ -275,7 +275,7 @@ nav_order: 3
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-    <h2>Train Coupling as Spring, Mass, Dampener</h2>
+    <h2>Train Coupling as Spring, Mass, Damper</h2>
     </p>
     <p>
     In an interview a while back I was asked how analyze the coupling between trains. I forget what the analysis was supposed to be getting at it but the question was more about how to model the situation so using a free body diagram to show the forces and then model the coupling as a spring and damper so you end up with two masses and a spring and damper between them in the simplest case.
@@ -336,7 +336,7 @@ nav_order: 3
     $$ m_1 \frac{d \dot{x}_1}{dt} = -k_{12}(x_1-x_2) - c_{12}(\dot{x}_1-\dot{x}_2) - f_1 \dot{x}_1 + F_1(t) $$
     $$ m_2 \frac{d \dot{x}_2}{dt} = k_{12}(x_1-x_2) + c_{12}(\dot{x}_1-\dot{x}_2) - f_2 \dot{x}_2 + F_2(t) $$
     <p>
-    We can make the friction force proportional to the normal force using \(f=\mu m g\). We multiply by the velocity so that we have no friction force when the car isn't moving. 
+    We can make the friction force proportional to the velocity so that we don't have a friction force when the car is not moving. 
     </p>
     <p>
     We see that we can put this in state space form:
@@ -454,15 +454,15 @@ nav_order: 3
     </p>
     $$ x[k+1] = e^{AT} x[k] + A^{-1} (e^{AT} - I) Bu[k] $$
     <p>
-    This time, we can expand \(e^{AT} = \sum_{k=0}^{\infty} \frac{(AT)^{k}}{k!}\). When we plug this in, we get:
+    This time, we can expand \(e^{AT} = \sum_{n=0}^{\infty} \frac{(AT)^{n}}{n!}\). When we plug this in, we get:
     </p>
-    $$ x[k+1] = e^{AT} x[k] + A^{-1} (\sum_{k=0}^{\infty} \frac{(AT)^{k}}{k!} - I) Bu[k] $$
-    $$ = A^{-1} (I + \sum_{k=1}^{\infty} \frac{(AT)^{k}}{k!} - I) Bu[k] $$
-    $$ =  \sum_{k=1}^{\infty} \frac{A^{k-1}T^{k}}{k!} Bu[k] = \sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} $$
+    $$ x[k+1] = e^{AT} x[k] + A^{-1} (\sum_{n=0}^{\infty} \frac{(AT)^{n}}{n!} - I) Bu[k] $$
+    $$ = A^{-1} (I + \sum_{n=1}^{\infty} \frac{(AT)^{n}}{n!} - I) Bu[k] $$
+    $$ =  \sum_{n=1}^{\infty} \frac{A^{n-1}T^{n}}{n!} Bu[k] = \sum_{n=0}^{\infty} \frac{A^{n}T^{n+1}}{(n+1)!} $$
     <p>
-    We then can use a Pade approximation for \( \sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} \). This will be good practice for understanding the Pade approximation. We will find a [2/2] Pade approximation. What we will have is:
+    We then can use a Pade approximation for \( \sum_{n=0}^{\infty} \frac{A^{n}T^{n+1}}{(n+1)!} \). This will be good practice for understanding the Pade approximation. We will find a [2/2] Pade approximation. What we will have is:
     </p>
-    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 = \frac{a_0 + a_1 A + a_2 A^2}{1 + b_1 A + b_2 A^2} $$
+    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 + m_4 A^4 = \frac{a_0 + a_1 A + a_2 A^2}{1 + b_1 A + b_2 A^2} $$
     <p>
     The first thing we want to do is expand the denominator the Pade approximation to get a geometric series:
     </p>
@@ -474,21 +474,21 @@ nav_order: 3
     </p>
     $$ c_0 = 1 $$
     $$ c_1 = -b_1 $$
-    $$ c_2 = -b_s1c_1 - b_2c_0 = b_1^2 - b_2 $$
+    $$ c_2 = -b_1c_1 - b_2c_0 = b_1^2 - b_2 $$
     $$ c_3 = -b_1c_2 - b_2c_1 = -b_1(b_1^2 - b_2) - b_2(-b_1) = -b_1^3 + 2b_1b_2 $$ 
     $$ c_4 = -b_1c_3 - b_2c_2 = -b_1(-b_1^3 + 2b_1b_2) - b_2(b_1^2 - b_2) $$
     $$ c_4 = b_1^4 - 2b_1^2b_2 - b_1^2b_2 + b_2^2 = b_1^4 - 3b_1^2b_2 + b_2^2 $$
     <p>
     Going back to our pade approximation, we have:
     </p>
-    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 = \frac{a_0 + a_1 A + a_2 A^2}{1 + b_1 A + b_2 A^2} $$
+    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 + m_4 A^4= \frac{a_0 + a_1 A + a_2 A^2}{1 + b_1 A + b_2 A^2} $$
     $$ = (a_0 + a_1 A + a_2 A^2) (c_0 + c_1 A + c_2 A^2 + c_3 A^3 + ...) $$ 
     $$ = a_0c_0 + (a_0c_1 + a_1c_0) A + (a_0c_2 + a_1c_1 + a_2c_0) A^2 + (a_0c_3 + a_1c_2 + a_2c_1) A^3 $$
     $$ + (a_0c_4 + a_1c_3 + a_2c_2) A ^ 4 + ... $$
     <p>
     I knew this already, but we can check here that we have 5 unknowns \(a_0,a_1,a_2,b_1,b_2\) and we have 5 equations. We can substitute in for our \(c_i\) values:
     </p>
-    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 = a_0 + (-a_0b_1 + a_1) A + [a_0(b_1^2-b_2) - a_1b_1 + a_2] A^2$$
+    $$ m_0 + m_1 A + m_2 A^2 + m_3 A^3 + m_4 A^4= a_0 + (-a_0b_1 + a_1) A + [a_0(b_1^2-b_2) - a_1b_1 + a_2] A^2$$
     $$ + [a_0(-b_1^3 + 2b_1b_2) + a_1(b_1^2 - b_2) - a_2b_1] A^3  $$
     $$ + [a_0(b_1^4 - 3b_1^2b_2 + b_2^2) + a_1(-b_1^3 + 2b_1b_2) + a_2(b_1^2 - b_2)] A ^ 4 + ... $$
     <p>
@@ -520,9 +520,9 @@ nav_order: 3
     <p>
     We iterate to find the parameters, and then we ultimately have:
     </p>
-    $$ x[k+1] = e^{AT} x[k] + \sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} Bu[k] $$
+    $$ x[k+1] = e^{AT} x[k] + \sum_{n=0}^{\infty} \frac{A^{n}T^{n+1}}{(n+1)!} Bu[k] $$
     <p>
-    where \(\sum_{k=0}^{\infty} \frac{A^{k}T^{k+1}}{(k+1)!} \) is approximated using the [2/2] Pade approximation we found above.
+    where \(\sum_{n=0}^{\infty} \frac{A^{n}T^{n+1}}{(n+1)!} \) is approximated using the [2/2] Pade approximation we found above.
     </p>
   </div>
 
@@ -676,8 +676,8 @@ nav_order: 3
 
   <!-- Figure -->
   <figure style="width: 70%; min-width: 200px; align-self: center">
-    <img src="/assets/miscellaneous/trainSpringMassDamper/Total_Energy_Error_Percent.png" alt="Total Energy Error (as a percentage of input energy)" style="width:100%; border-radius:5px;">
-    <figcaption style="text-align:center;"><em>Total Energy Error (as a percentage of input energy).</em></figcaption>
+    <img src="/assets/miscellaneous/trainSpringMassDamper/Total_Energy_Error_Percent.png" alt="Total Energy Error (as a percentage of input energy + initial KE and PE)" style="width:100%; border-radius:5px;">
+    <figcaption style="text-align:center;"><em>Total Energy Error (as a percentage of input energy + initial KE + PE).</em></figcaption>
   </figure>
   
   <!-- Text content -->
