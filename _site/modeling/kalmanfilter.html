@@ -45,7 +45,7 @@
   <!-- Text content -->
   <div style="flex: 1; min-width: 250px;">
     <p>
-      Batteries, in particular Li-Ion batteries, have received a lot of attention due to their high energy densities. This and their long cycle life make them attractive for a variety of applications. One of the challenges with Li-Ion batteries is their relatively flat voltage vs state of charge (SOC) characteristic. Compared to lead batteries, where the dV/dSOC slope magnitude is larger, it’s more difficult to calculate and find the SOC of a Li-Ion battery. 
+      Batteries, in particular Li-Ion batteries, have received a lot of attention due to their high energy densities. This and their long cycle life make them attractive for a variety of applications. One of the challenges with Li-Ion batteries is their relatively flat voltage vs state of charge (SOC) characteristic. Compared to lead batteries, where the dV/dSOC slope magnitude is larger, it’s more difficult to calculate and find the SOC of a Li-Ion battery. Batteries are a nice vehicle for me to use to learn about the Kalman filter since this is a proven application and there is plenty of references. 
     </p>
     <p>
       Early in my career, I was working on an energy management project (optimizing battery charging and discharging using grid and solar power) and this is where I first came across the Kalman filter. During that project, I didn't get to dive into battery SOC estimation techniques too much and this project is motivated by that. I wanted to really understand the Kalman filter and how to apply it. 
@@ -532,13 +532,13 @@
   <p>
   For the Coulomb counting method, we basically just integrate the current over time to calculate how the SOC changes. This is essentially the same as our SOC model in the Kalman filter. This is:
   </p>
-  $$ SOC(t) = SOC(t_0) + \int_{t_o}^{t} \frac{i(t)}{3600 \, Q} \, dt $$
+  $$ SOC(t) = SOC(t_0) - \int_{t_o}^{t} \frac{i(t)}{3600 \, Q} \, dt $$
   <p>
   For our discrete time case, we have:
   </p>
-  $$ SOC_k = SOC_{k-1} + \frac{i_k}{3600 \, Q} \Delta t $$
+  $$ SOC_k = SOC_{k-1} - \frac{i_k}{3600 \, Q} \Delta t $$
   <p>
-  This method is obviously susceptible to drifts as the error also integrates over time
+  This method is obviously susceptible to drifts as the error also integrates over time. 
   </p>
 
   </div>
