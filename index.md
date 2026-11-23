@@ -58,24 +58,24 @@ nav_order: 1
   <div style="flex: 1; min-width: 250px;">
     <h3 style="text-align: center">AI Disclosure</h3>
     <p>
-    I did use AI (Claude) in some of these projects. I think it's important to be upfront about that. I think it's also important to clarify how I use AI in my work. I use AI in three different ways: 
+    I used AI (Claude) on some of these projects, and I want to be upfront about how.
     </p>
     <ol>
-    <li>Advanced Google:</li>
+    <li>Brainstorming:</li>
     <p>
-    I've had some luck in using AI to bounce ideas off. The collision detection using the Separating Axis Theorem in my magnet model came from Claude. Claude showed me how that theorem could be the answer to my problem and then I went and learned about that theorem and how to use it on my own. This is susceptible to what Claude thinks is relevant or not, and you have to be careful since sometimes AI just tells you what you want to hear.
+    Claude suggested the Separating Axis Theorem for collision detection in my magnet model. I then learned the theorem and implemented it myself. It can only suggest what it thinks is relevant, and sometimes it just tells you what you want to hear.
     </p>
-    <li>Some scripting help:</li>
+    <li>Scripting help:</li>
     <p>
-    I am very much against letting AI develop any modeling code without direct involvement from me. If I don't understand the math or the physics being used, I don't use it. I do use AI to help me build scripts to pull data in from an Excel file or to help make my code more robust. In my Magnet Model, Claude helped me build this class function where I can input the magnet properties once and then use that function to pull the properties in rather than having to change the properties in every script. Linear algebra is a little more difficult to use in Python compared to MATLAB and Claude helped me figure out how to write row and column vectors more effectively. All of the actual physics code was written by me, or at least started by me and Claude was used to make it a little more robust to invalid entries.
+    Claude helped with importing Excel data, input validation, a class that stores the magnet properties in one place, and handling row and column vectors in Python. The physics code is mine. Claude helped make it more robust.
     </p>
     <li>Proofreading and troubleshooting:</li>
     <p>
-    Claude can be helpful in finding errors much more quickly than I am. However, you need to be careful again since AI can confuse itself. This again happened with the magnet model when Claude was telling me that my quaternion time derivative was wrong but it was actually confused about what was rotating with respect to what. 
+    Claude finds errors faster than I can, but it can confuse itself. It once flagged my quaternion time derivative as wrong because it misread which frame was rotating. 
     </p>
     </ol>
     <p>
-    Just like most things, I don't think AI is inherently good or bad, but it's more about how we use it. For me currently, this is not relying on AI to do any of the math or physics for me. I value learning and knowing math and physics, and can't ever outsource that to AI. I hear stories of people building models at work that they don't understand and this can be very dangerous. I don't think this is necessarily new. There are a lot of commercial products out there (MATLAB, CFD) that have built in functions that can be easy to misuse or misunderstand. I do find some value in AI helping me structure and organize myself better. I'm not a software architect expert (far from it) and AI has helped me organize my projects better. However I constantly have to ask myself am I learning anything from this or is the AI doing it for me?
+    AI isn't inherently good or bad, and any tool, AI or commercial software, can be misused when you don't understand it. My rule is that the math and physics are always mine. If I can't derive and explain it, I don't use it.
     </p>
   </div>
 
